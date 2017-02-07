@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+// 引入样式
+import 'common/css/index.scss';
+
 // 引入Muse-UI
 import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css'
