@@ -25,7 +25,7 @@
     },
     data () {
       return {
-        article: {}
+        article: this.article
       }
     },
     methods: {

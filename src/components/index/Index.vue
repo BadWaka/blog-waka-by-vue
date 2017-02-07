@@ -5,13 +5,24 @@
 
     <!--顶部抽屉按钮和github-->
     <div class="top">
-      <mu-icon-button @click="drawer">
+      <mu-icon-button @click="drawerToggle">
         <i class="material-icons">list</i>
       </mu-icon-button>
       <mu-icon-button @click="github">
         <i class="iconfont icon-github"></i>
       </mu-icon-button>
     </div>
+
+    <!--侧边菜单-->
+    <mu-drawer right :open="isDrawerOpen" @close="drawerToggle">
+      <mu-appbar class="drawer-header" title="类别"/>
+      <mu-list>
+        <mu-list-item title="Menu Item 1"/>
+        <mu-list-item title="Menu Item 2"/>
+        <mu-list-item title="Menu Item 3"/>
+        <mu-list-item @click="drawerToggle" title="Close"/>
+      </mu-list>
+    </mu-drawer>
 
     <!--头部-->
     <header>
@@ -45,7 +56,8 @@
     // 数据
     data () {
       return {
-        articles: {}
+        articles: {}, // 文章数据
+        isDrawerOpen: false   // 侧边栏开关
       }
     },
     // 实例创建后被调用；生命周期钩子
@@ -63,8 +75,8 @@
       });
     },
     methods: {
-      drawer () {
-        console.log(1);
+      drawerToggle () {
+        this.isDrawerOpen = !this.isDrawerOpen;
       },
       github () {
         console.log(2);
@@ -84,6 +96,10 @@
     justify-content: space-between;
     width: 100%;
     color: #fff;
+    background-color: $blue500;
+  }
+
+  .drawer-header {
     background-color: $blue500;
   }
 
