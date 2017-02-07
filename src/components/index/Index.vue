@@ -24,13 +24,19 @@
     </header>
 
     <!--文章列表-->
-    <article-item></article-item>
+    <section class="articles">
+      <article-item></article-item>
+    </section>
+
   </section>
 
 </template>
 
 <script>
-  import ArticleItem from '../../components/index/article-item/ArticleItem.vue';
+
+  // 引入ArticleItem组件；这里可以直接使用components而不需要../../components
+  // 是因为在build/webpack.base.conf.js中alias字段里定义了别名
+  import ArticleItem from 'components/index/article-item/ArticleItem.vue';
 
   export default {
     // 包含的组件
@@ -71,8 +77,13 @@
 
     .welcome {
       margin-top: 20px;
-      font-size: 2.5em;
+      font-size: 24px;
       font-family: "Comic Sans MS";
     }
+  }
+
+  /*文章列表*/
+  .articles {
+    margin-top: -40px;
   }
 </style>
