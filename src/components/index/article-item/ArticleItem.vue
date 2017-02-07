@@ -1,23 +1,36 @@
 <template>
 
-  <section class="article-item">
-    <mu-paper class="wrapper" :zDepth="3">
-      <div class="title">title</div>
-      <div class="img"></div>
-      <div class="intro"></div>
+  <mu-paper class="mu-paper" :zDepth="2">
+    <section class="wrapper" @click="itemClick">
+      <!--标题-->
+      <div class="title">{{article.title}}</div>
+      <!--简介-->
+      <div class="intro">{{article.intro}}</div>
+      <!--额外信息-->
       <div class="extra">
-        <span class="type"></span>
+        <span class="type">{{article.typeName}}</span>
       </div>
-    </mu-paper>
-  </section>
+    </section>
+  </mu-paper>
 
 </template>
 
 <script>
   export default {
+    // 继承自父组件的属性
+    props: {
+      article: {
+        type: Object
+      }
+    },
     data () {
       return {
         article: {}
+      }
+    },
+    methods: {
+      itemClick () {
+        console.log('itemClick');
       }
     }
   };
@@ -25,22 +38,27 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
 
-  .article-item {
-    display: flex;
-    justify-content: center;
+  .mu-paper {
+    width: 95%;
+    margin-bottom: 20px;
   }
 
   .wrapper {
-    padding: 50px;
-    height: 500px;
-    width: 80%;
+    padding: 36px;
 
     .title {
-
+      font-size: 24px;
+      margin-bottom: 24px;
     }
 
-    .img {
+    .intro {
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
 
+    .type {
+      font-size: 12px;
+      margin-bottom: 16px;
     }
   }
 </style>

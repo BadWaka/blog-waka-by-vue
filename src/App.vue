@@ -10,6 +10,8 @@
   }
 </script>
 
-<style>
-
+<style lang="scss" rel="stylesheet/scss">
+  html, body {
+    font-family: Helvetica, STHeiti;
+  }
 </style>

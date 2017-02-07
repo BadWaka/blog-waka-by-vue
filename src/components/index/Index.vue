@@ -3,19 +3,18 @@
   <!--index页整个容器-->
   <section>
 
+    <!--顶部抽屉按钮和github-->
+    <div class="top">
+      <mu-icon-button @click="drawer">
+        <i class="material-icons">list</i>
+      </mu-icon-button>
+      <mu-icon-button @click="github">
+        <i class="iconfont icon-github"></i>
+      </mu-icon-button>
+    </div>
+
     <!--头部-->
     <header>
-
-      <!--顶部抽屉按钮和github-->
-      <div class="top">
-        <mu-icon-button>
-          <i class="material-icons">list</i>
-        </mu-icon-button>
-        <mu-icon-button>
-          <i class="iconfont icon-github"></i>
-        </mu-icon-button>
-      </div>
-
       <!--头像-->
       <div class="avatar"></div>
 
@@ -25,7 +24,7 @@
 
     <!--文章列表-->
     <section class="articles">
-      <article-item></article-item>
+      <article-item v-for="article in articles" :article="article"></article-item>
     </section>
 
   </section>
@@ -42,6 +41,34 @@
     // 包含的组件
     components: {
       ArticleItem
+    },
+    // 数据
+    data () {
+      return {
+        articles: {}
+      }
+    },
+    // 实例创建后被调用；生命周期钩子
+    created () {
+      // 请求文章列表数据
+      this.$http.get('/api/articles').then(response => {  // 请求成功
+        console.log(response);
+        if (response.status !== 200) {
+          this.articles = 'status = ' + response.status + ' errorCode = ' + response.body.errorCode;
+          return;
+        }
+        this.articles = response.body.data;
+      }, response => {  // 请求失败
+
+      });
+    },
+    methods: {
+      drawer () {
+        console.log(1);
+      },
+      github () {
+        console.log(2);
+      }
     }
   };
 </script>
@@ -51,24 +78,27 @@
   // 引入颜色css
   @import "../../common/css/color.scss";
 
+  .top {
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    width: 100%;
+    color: #fff;
+    background-color: $blue500;
+  }
+
   header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 400px;
+    height: 440px;
     color: #fff;
     background-color: $blue500;
-
-    .top {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
 
     .avatar {
       height: 150px;
       width: 150px;
-      margin-top: 50px;
+      margin-top: 100px;
       background: url(http://img.hb.aicdn.com/19dd42725e125bb7424785afbddeee41d5eb13931b097-evWO7z_fw658) center no-repeat;
       background-size: cover;
       border-radius: 50%;
@@ -84,6 +114,10 @@
 
   /*文章列表*/
   .articles {
-    margin-top: -40px;
+    margin-top: -100px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
