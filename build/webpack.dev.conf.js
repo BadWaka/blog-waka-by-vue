@@ -1,8 +1,10 @@
 var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
+// 用来合并配置文件
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
+// webpack提供的操作html文件的插件
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
