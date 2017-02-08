@@ -79,7 +79,7 @@
         this.isDrawerOpen = !this.isDrawerOpen;
       },
       github () {
-        console.log(2);
+        window.open('https://github.com/BadWaka');
       }
     }
   };
@@ -131,7 +131,6 @@
   /*文章列表*/
   .articles {
     margin-top: -100px;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;

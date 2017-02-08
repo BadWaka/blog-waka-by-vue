@@ -1,7 +1,6 @@
 <template>
-
-  <mu-paper class="mu-paper" :zDepth="2">
-    <section class="wrapper" @click="itemClick">
+  <router-link class="wrapper" to="/articleDetail">
+    <mu-paper class="wrapper2" :zDepth="2">
       <!--标题-->
       <div class="title">{{article.title}}</div>
       <!--简介-->
@@ -10,8 +9,8 @@
       <div class="extra">
         <span class="type">{{article.typeName}}</span>
       </div>
-    </section>
-  </mu-paper>
+    </mu-paper>
+  </router-link>
 
 </template>
 
@@ -38,27 +37,30 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
 
-  .mu-paper {
-    width: 95%;
-    margin-bottom: 20px;
-  }
-
   .wrapper {
-    padding: 36px;
+    width: 90%;
+    margin-bottom: 20px;
+    color: #000;
 
-    .title {
-      font-size: 24px;
-      margin-bottom: 24px;
+    .wrapper2 {
+      padding: 24px;
+
+      .title {
+        font-size: 24px;
+        margin-bottom: 24px;
+      }
+
+      .intro {
+        font-size: 16px;
+        margin-bottom: 16px;
+      }
+
+      .type {
+        font-size: 12px;
+        margin-bottom: 16px;
+      }
     }
 
-    .intro {
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
-
-    .type {
-      font-size: 12px;
-      margin-bottom: 16px;
-    }
   }
+
 </style>
