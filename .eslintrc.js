@@ -26,6 +26,8 @@ module.exports = {
     // allow semi
     'semi': 0,
     // allow no-trailing-spaces
-    'no-trailing-spaces': 0
+    'no-trailing-spaces': 0,
+    // 允许定义变量而不用它
+    'no-unused-vars': 0
   }
 };

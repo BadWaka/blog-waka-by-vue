@@ -14,18 +14,34 @@
 
     <!--文章详情-->
     <mu-paper class="article" :zDepth="2">
-
+      <!--使用v-html输出纯HTML-->
+      <div v-html="articleContent"></div>
     </mu-paper>
   </section>
 </template>
 
 <script>
+
+  // 引入marked，用来将Markdown转换成HTML
+  import marked from 'marked';
+
   export default {
+    data () {
+      return {
+        articleContent: '# 你好'
+      }
+    },
     methods: {
+      // 后退
       back () {
-        console.log('back');
         window.history.back();
       }
+    },
+    // Vue实例创建之后被调用
+    created () {
+      console.log('created');
+      // Markdown转换HTML
+      this.articleContent = marked(this.articleContent);
     }
   };
 </script>
@@ -48,7 +64,7 @@
 
   .article {
     width: 90%;
-    height: 500px;
-    margin-top: 48px;
+    margin-top: 24px;
+    padding: 24px;
   }
 </style>

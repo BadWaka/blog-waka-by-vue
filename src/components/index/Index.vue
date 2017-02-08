@@ -17,10 +17,20 @@
     <mu-drawer right :open="isDrawerOpen" @close="drawerToggle">
       <mu-appbar class="drawer-header" title="类别"/>
       <mu-list>
-        <mu-list-item title="Menu Item 1"/>
-        <mu-list-item title="Menu Item 2"/>
-        <mu-list-item title="Menu Item 3"/>
-        <mu-list-item @click="drawerToggle" title="Close"/>
+        <mu-list-item title="HTML"/>
+        <mu-list-item title="CSS"/>
+        <mu-list-item title="Sass"/>
+        <mu-list-item title="Java Script"/>
+        <mu-list-item title="ECMAScript"/>
+        <mu-list-item title="Vue.js"/>
+        <mu-list-item title="React"/>
+        <mu-list-item title="React Native"/>
+        <mu-list-item title="微信小程序"/>
+        <mu-list-item title="Node.js"/>
+        <mu-list-item title="MongoDB"/>
+        <mu-list-item title="macOS"/>
+        <mu-list-item title="Linux"/>
+        <mu-list-item @click="drawerToggle" title="关闭"/>
       </mu-list>
     </mu-drawer>
 
