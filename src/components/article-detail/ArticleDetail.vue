@@ -12,8 +12,6 @@
       </mu-icon-menu>
     </mu-appbar>
 
-    <mu-raised-button label="异步请求数据" @click="request"/>
-
     <!--文章详情-->
     <mu-paper class="article" :zDepth="2">
       <!--使用v-html输出纯HTML-->
@@ -28,6 +26,10 @@
   import marked from 'marked';
   // 配偶之marked
   marked.setOptions({
+    // 代码高亮，不生效的原因是marked输出的html里<code></code>标签没有加特定的类
+    highlight: function (code) {
+      return require('highlight.js').highlightAuto(code).value;
+    },
     renderer: new marked.Renderer(),
     gfm: true,
     tables: true,
@@ -96,9 +98,6 @@
 
   .markdown {
 
-    p {
-      background: #2196f3;
-    }
   }
 
 
