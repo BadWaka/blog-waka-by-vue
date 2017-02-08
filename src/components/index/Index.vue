@@ -91,9 +91,13 @@
   @import "../../common/css/color.scss";
 
   .top {
+    height: 64px;
+    padding-left: 8px;
+    padding-right: 8px;
     display: flex;
     position: fixed;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     color: #fff;
     background-color: $blue500;
