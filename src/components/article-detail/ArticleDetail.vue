@@ -12,10 +12,12 @@
       </mu-icon-menu>
     </mu-appbar>
 
+    <mu-raised-button label="异步请求数据" @click="request"/>
+
     <!--文章详情-->
     <mu-paper class="article" :zDepth="2">
       <!--使用v-html输出纯HTML-->
-      <div v-html="articleContent"></div>
+      <div class="markdown" v-html="articleContent"></div>
     </mu-paper>
   </section>
 </template>
@@ -24,24 +26,48 @@
 
   // 引入marked，用来将Markdown转换成HTML
   import marked from 'marked';
+  // 配偶之marked
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false, // pedantic adj. 迂腐的；学究式的；卖弄学问的；假装学者的
+    sanitize: false,
+    smartLists: true,
+    smartypants: false
+  });
 
   export default {
     data () {
       return {
-        articleContent: '# 你好'
+        articleContent: '#你好'
       }
     },
     methods: {
       // 后退
       back () {
         window.history.back();
+      },
+      // 异步请求
+      request () {
+
       }
     },
     // Vue实例创建之后被调用
     created () {
-      console.log('created');
-      // Markdown转换HTML
-      this.articleContent = marked(this.articleContent);
+      this.$http.get('/api/article/1').then(response => {
+        console.log(response);
+        // 拿到数据
+        let mdData = response.body.data;  // md格式数据
+        mdData = mdData.replace(/#/g, '# ');  // 因为简书里的#后接文字是可以被识别的，但是marked必须# 后接文字才可以被识别
+        let htmlData = marked(mdData);    // html格式数据
+        htmlData = htmlData.replace(/\n/g, '<br>');
+        console.log(htmlData);
+        this.articleContent = htmlData;
+      }, response => {  // 请求失败
+        console.log(response);
+      });
     }
   };
 </script>
@@ -67,4 +93,13 @@
     margin-top: 24px;
     padding: 24px;
   }
+
+  .markdown {
+
+    p {
+      background: #2196f3;
+    }
+  }
+
+
 </style>

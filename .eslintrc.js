@@ -28,6 +28,8 @@ module.exports = {
     // allow no-trailing-spaces
     'no-trailing-spaces': 0,
     // 允许定义变量而不用它
-    'no-unused-vars': 0
+    'no-unused-vars': 0,
+    'padded-blocks': 0,
+    'no-useless-escape': 0
   }
 };

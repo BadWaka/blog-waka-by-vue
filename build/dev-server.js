@@ -28,12 +28,15 @@ var app = express()
 var compiler = webpack(webpackConfig)
 
 
-
-
 /*********************************************************************/
-// TODO 数据mock
-var appData = require('../data.json');  // 拿到mock数据
+// TODO 编写本地服务 使用mock数据
+
+// 引入data.json
+var appData = require('../data.json');
 var articles = appData.articles;  // 拿到文章列表数据
+
+// 因为要读取.md文件，所以引入文件读取模块fs
+var fs = require('fs');
 
 // 定义Express的路由，并编写接口
 var apiRoutes = express.Router();
@@ -47,11 +50,29 @@ apiRoutes.get('/articles', function (req, res) {
   });
 });
 
+// 请求具体的某一篇文章
+apiRoutes.get('/article/1', function (req, res) {
+  // 文件路径
+  var mdPath = path.join(__dirname, '../article1.md');
+  fs.readFile(mdPath, {
+    encoding: 'utf-8'
+  }, function (err, data) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    var mdStr = data;
+    console.log('mdStr = ' + mdStr);
+    res.json({
+      errorCode: 0,
+      data: mdStr
+    });
+  });
+});
+
 // 使用该路由；所有的路由都要加上/api，举个栗子：localhost:8080/api/articles
 app.use('/api', apiRoutes);
 /*********************************************************************/
-
-
 
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
