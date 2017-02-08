@@ -64,8 +64,7 @@
         let mdData = response.body.data;  // md格式数据
         mdData = mdData.replace(/#/g, '# ');  // 因为简书里的#后接文字是可以被识别的，但是marked必须# 后接文字才可以被识别
         let htmlData = marked(mdData);    // html格式数据
-        htmlData = htmlData.replace(/\n/g, '<br>');
-        console.log(htmlData);
+//        console.log(htmlData);
         this.articleContent = htmlData;
       }, response => {  // 请求失败
         console.log(response);
@@ -93,11 +92,11 @@
   .article {
     width: 90%;
     margin-top: 24px;
-    padding: 24px;
+    padding: 48px;
   }
 
   .markdown {
-
+    width: 100%;
   }
 
 
