@@ -62,7 +62,7 @@ apiRoutes.get('/article/1', function (req, res) {
       return;
     }
     var mdStr = data;
-    console.log('mdStr = ' + mdStr);
+    // console.log('mdStr = ' + mdStr);
     res.json({
       errorCode: 0,
       data: mdStr

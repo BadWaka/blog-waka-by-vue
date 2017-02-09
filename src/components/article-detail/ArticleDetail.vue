@@ -24,12 +24,8 @@
 
   // 引入marked，用来将Markdown转换成HTML
   import marked from 'marked';
-  // 配偶之marked
+  // 配置marked
   marked.setOptions({
-    // 代码高亮，不生效的原因是marked输出的html里<code></code>标签没有加特定的类
-    highlight: function (code) {
-      return require('highlight.js').highlightAuto(code).value;
-    },
     renderer: new marked.Renderer(),
     gfm: true,
     tables: true,
