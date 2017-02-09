@@ -22,7 +22,10 @@
 
 <script>
 
-  // 引入highlightjs来将代码块高亮
+  // 引入highlight.js来将代码块高亮
+  // 因为文件夹名最好不要有. 所以叫highlightjs，其实它们是一样的，只不过highlightjs的版本略低
+  // highlight.js模块的版本是9.9.0
+  // highlightjs模块的版本是9.8.0
   import highlightjs from 'highlightjs';
 
   // 引入marked，用来将Markdown转换成HTML
