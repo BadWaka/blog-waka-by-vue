@@ -22,18 +22,17 @@
 
 <script>
 
+  // 引入highlightjs来将代码块高亮
+  import highlightjs from 'highlightjs';
+
   // 引入marked，用来将Markdown转换成HTML
   import marked from 'marked';
   // 配置marked
   marked.setOptions({
-    renderer: new marked.Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false, // pedantic adj. 迂腐的；学究式的；卖弄学问的；假装学者的
-    sanitize: false,
-    smartLists: true,
-    smartypants: false
+    // 配置高亮
+    highlight: function (code, lang, callback) {
+      return highlightjs.highlightAuto(code).value;   // 这里highlightjs会自动给代码增加类
+    }
   });
 
   export default {
@@ -60,7 +59,7 @@
         let mdData = response.body.data;  // md格式数据
         mdData = mdData.replace(/#/g, '# ');  // 因为简书里的#后接文字是可以被识别的，但是marked必须# 后接文字才可以被识别
         let htmlData = marked(mdData);    // html格式数据
-//        console.log(htmlData);
+        console.log(htmlData);
         this.articleContent = htmlData;
       }, response => {  // 请求失败
         console.log(response);
