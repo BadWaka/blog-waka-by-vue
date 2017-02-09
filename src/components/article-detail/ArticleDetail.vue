@@ -1,8 +1,10 @@
 <template>
   <section class="page">
-    <!--appbar-->
-    <mu-appbar class="app-bar" title="文章标题">
+    <!--顶部工具栏-->
+    <mu-appbar class="app-bar" title="从零开始，教你用Webpack构建React基础工程">
+      <!--返回按钮-->
       <mu-icon-button icon="arrow_back" slot="left" @click="back"/>
+      <!--右侧菜单-->
       <mu-icon-menu icon="more_vert" slot="right">
         <mu-menu-item title="菜单 1"/>
         <mu-menu-item title="菜单 2"/>
@@ -41,7 +43,7 @@
   export default {
     data () {
       return {
-        articleContent: '#你好'
+        articleContent: ''
       }
     },
     methods: {
