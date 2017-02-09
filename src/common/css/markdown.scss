@@ -18,8 +18,10 @@ li {
 
 // 图片
 img {
+  display: block;
   width: auto;
   max-width: 100%; // 防止图片撑开div
+  margin-bottom: 24px;
 }
 
 /*------------代码--------------*/

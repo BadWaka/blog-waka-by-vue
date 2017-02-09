@@ -17,19 +17,7 @@
     <mu-drawer right :open="isDrawerOpen" @close="drawerToggle">
       <mu-appbar class="drawer-header" title="类别"/>
       <mu-list>
-        <mu-list-item title="HTML"/>
-        <mu-list-item title="CSS"/>
-        <mu-list-item title="Sass"/>
-        <mu-list-item title="Java Script"/>
-        <mu-list-item title="ECMAScript"/>
-        <mu-list-item title="Vue.js"/>
-        <mu-list-item title="React"/>
-        <mu-list-item title="React Native"/>
-        <mu-list-item title="微信小程序"/>
-        <mu-list-item title="Node.js"/>
-        <mu-list-item title="MongoDB"/>
-        <mu-list-item title="macOS"/>
-        <mu-list-item title="Linux"/>
+        <mu-list-item v-for="type in typeArray" :title="type"/>
         <mu-list-item @click="drawerToggle" title="关闭"/>
       </mu-list>
     </mu-drawer>
@@ -67,7 +55,8 @@
     data () {
       return {
         articles: {}, // 文章数据
-        isDrawerOpen: false   // 侧边栏开关
+        isDrawerOpen: false,  // 侧边栏开关
+        typeArray: ['HTML', 'CSS', 'Sass', 'Java Script', 'ECMAScript', 'Vue.js', 'React', 'React Native', '微信小程序', 'Node.js', 'MongoDB', 'macOS', 'Linux']  // 类型数组，mock数据，后续会从服务器上取得
       }
     },
     // 实例创建后被调用；生命周期钩子
