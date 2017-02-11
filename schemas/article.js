@@ -1,7 +1,7 @@
 /**
  * Created by BadWaka on 2017/2/11.
  */
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const ArticleSchema = new mongoose.Schema({
   title: String,  // 文章名
@@ -23,7 +23,7 @@ const ArticleSchema = new mongoose.Schema({
 });
 
 // pre()的意思是，每次进行save操作之前，都会调用这个方法
-ArticleSchema.pre('save', (next) => {
+ArticleSchema.pre('save', function (next) {
   // 判断数据是否是新添加的
   if (this.isNew) {
     // 如果是，则将创建时间和更新时间都设置为当前时间
@@ -39,7 +39,7 @@ ArticleSchema.pre('save', (next) => {
 ArticleSchema.statics = {
 
   // fetch方法，用来取出数据库里面所有的数据
-  fetch (cb) {
+  fetch: function (cb) {
     return this
       .find()
       .sort('meta.updateAt')  // 排序;根据更新时间排序
@@ -47,7 +47,7 @@ ArticleSchema.statics = {
   },
 
   // 根据id，查询单条数据
-  findById (id, cb) {
+  findById: function (id, cb) {
     return this
       .findOne({
         _id: id

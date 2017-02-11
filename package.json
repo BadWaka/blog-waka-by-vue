@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "body-parser": "^1.16.1",
     "highlightjs": "^9.8.0",
     "keycode": "^2.1.8",
     "marked": "^0.3.6",

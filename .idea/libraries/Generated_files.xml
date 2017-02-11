@@ -9,7 +9,9 @@
         <item url="file://$PROJECT_DIR$/dist/src/router/index.js" />
         <item url="file://$PROJECT_DIR$/dist/build/dev-server.js" />
         <item url="file://$PROJECT_DIR$/dist/schemas/article.js" />
+        <item url="file://$PROJECT_DIR$/dist/server.js" />
         <item url="file://$PROJECT_DIR$/dist/build/webpack.base.conf.js" />
+        <item url="file://$PROJECT_DIR$/dist/models/article.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -20,7 +22,9 @@
       <root url="file://$PROJECT_DIR$/dist/src/router/index.js" />
       <root url="file://$PROJECT_DIR$/dist/build/dev-server.js" />
       <root url="file://$PROJECT_DIR$/dist/schemas/article.js" />
+      <root url="file://$PROJECT_DIR$/dist/server.js" />
       <root url="file://$PROJECT_DIR$/dist/build/webpack.base.conf.js" />
+      <root url="file://$PROJECT_DIR$/dist/models/article.js" />
     </CLASSES>
     <SOURCES />
   </library>

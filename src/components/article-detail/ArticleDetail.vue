@@ -58,7 +58,7 @@
     },
     // Vue实例创建之后被调用
     created () {
-      this.$http.get('/api/article/1').then(response => {
+      this.$http.get('/blogWaka/article/1').then(response => {
         console.log(response);
         // 拿到数据
         let mdData = response.body.data;  // md格式数据
