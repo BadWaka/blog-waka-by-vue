@@ -16,6 +16,7 @@
     "highlightjs": "^9.8.0",
     "keycode": "^2.1.8",
     "marked": "^0.3.6",
+    "mongoose": "^4.8.1",
     "muse-ui": "^2.0.0-rc.5",
     "vue": "^2.1.10",
     "vue-resource": "^1.2.0",
