@@ -65,19 +65,18 @@ apiRoutes.get('/articles', function (req, res) {
 });
 
 // 请求具体的某一篇文章
-apiRoutes.get('/article', function (req, res) {
-  // 文件路径
-  let mdPath = path.join(__dirname, '../article1.md');
-  fs.readFile(mdPath, {
-    encoding: 'utf-8'
-  }, function (err, data) {
+apiRoutes.get('/articleDetail/:id', function (req, res) {
+  const id = req.params.id;
+  console.log('id = ' + id);
+
+  Article.findById(id, function (err, article) {
     if (err) {
       handleError(err);
       return;
     }
     res.json({
       errorCode: 0,
-      data: data
+      data: article
     });
   });
 });

@@ -2,7 +2,7 @@
   <section class="page">
     <!--app bar-->
     <mu-appbar class="bg-color-primary" title="添加文章">
-      <mu-icon-button icon='arrow_back' slot="left"/>
+      <mu-icon-button icon='arrow_back' slot="left" @click="back"/>
     </mu-appbar>
 
     <!--文章详情-->
@@ -41,6 +41,11 @@
       }
     },
     methods: {
+      // 后退
+      back () {
+        window.history.back();
+      },
+      // 显示错误提示
       showSnackbar () {
         this.snackbar = true;
         if (this.snackTimer) {
@@ -50,6 +55,7 @@
           this.snackbar = false;
         }, 2000);
       },
+      // 隐藏错误提示
       hideSnackbar () {
         this.snackbar = false;
         if (this.snackTimer) {

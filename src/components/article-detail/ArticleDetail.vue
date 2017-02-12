@@ -1,7 +1,7 @@
 <template>
   <section class="page">
     <!--顶部工具栏-->
-    <mu-appbar class="app-bar" title="从零开始，教你用Webpack构建React基础工程">
+    <mu-appbar class="app-bar" :title="article.title">
       <!--返回按钮-->
       <mu-icon-button icon="arrow_back" slot="left" @click="back"/>
       <!--右侧菜单-->
@@ -17,7 +17,7 @@
     <!--文章详情-->
     <mu-paper class="article" :zDepth="2">
       <!--使用v-html输出纯HTML-->
-      <div class="markdown" v-html="articleContent"></div>
+      <div class="markdown" v-html="article.articleContentHTML"></div>
     </mu-paper>
   </section>
 </template>
@@ -43,29 +43,30 @@
   export default {
     data () {
       return {
-        articleContent: ''
+        article: {}
       }
     },
     methods: {
       // 后退
       back () {
         window.history.back();
-      },
-      // 异步请求
-      request () {
-
       }
     },
     // Vue实例创建之后被调用
     created () {
-      this.$http.get('/blogWaka/article/1').then(response => {
+      // 从vue-router的路由拿到路由传过来的id
+      const id = this.$route.params.id;
+      console.log('id = ' + id);
+      // 请求文章详情，要带上文章id
+      this.$http.get('/blogWaka/articleDetail/' + id).then(response => {
         console.log(response);
         // 拿到数据
-        let mdData = response.body.data;  // md格式数据
-        mdData = mdData.replace(/#/g, '# ');  // 因为简书里的#后接文字是可以被识别的，但是marked必须# 后接文字才可以被识别
-        let htmlData = marked(mdData);    // html格式数据
-        console.log(htmlData);
-        this.articleContent = htmlData;
+        this.article = response.body.data;
+        let mdData = this.article.content;  // 拿到md格式内容数据
+        // 因为简书里的#后接文字是可以被识别的，但是marked必须# 后接文字才可以被识别
+        // 这里我想做一个需求，"###标题" 改为 "### 标题",但是我不知道怎么做
+        mdData = mdData.replace(/#+/g, '# ');
+        this.article.articleContentHTML = marked(mdData);    // html格式数据
       }, response => {  // 请求失败
         console.log(response);
       });

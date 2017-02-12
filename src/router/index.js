@@ -20,7 +20,7 @@ export default new Router({
     },
     // 文章详情页
     {
-      path: '/blogWaka/articleDetail',
+      path: '/blogWaka/articleDetail/:id',  // 这里设置了动态路径参数，因为需要根据不同的id访问不同的文章
       name: 'ArticleDetail',
       component: ArticleDetail
     },
