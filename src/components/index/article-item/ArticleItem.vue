@@ -7,10 +7,10 @@
       <!--标题-->
       <div class="title">{{article.title}}</div>
       <!--简介-->
-      <div class="intro">{{article.intro}}</div>
+      <div class="intro">简介：{{article.intro}}</div>
       <!--额外信息-->
       <div class="extra">
-        <span class="type">{{article.typeName}}</span>
+        <mu-raised-button :label="article.typeName" class="lower-case"/>
       </div>
     </mu-paper>
   </section>
@@ -44,6 +44,10 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
 
+  .lower-case {
+    text-transform: none;
+  }
+
   .wrapper {
     width: 90%;
     margin-bottom: 20px;
@@ -63,10 +67,10 @@
         margin-bottom: 16px;
       }
 
-      .type {
-        font-size: 12px;
-        margin-bottom: 16px;
+      .extra {
+        display: flex;
       }
+
     }
 
   }
