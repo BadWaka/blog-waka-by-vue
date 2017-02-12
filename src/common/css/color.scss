@@ -303,6 +303,10 @@ $fullWhite: rgba(255, 255, 255, 1);
 $darkWhite: rgba(255, 255, 255, 0.87);
 $lightWhite: rgba(255, 255, 255, 0.54);
 
+.color-primary {
+  color: $blue500;
+}
+
 .bg-color-primary {
   background-color: $blue500;
 }

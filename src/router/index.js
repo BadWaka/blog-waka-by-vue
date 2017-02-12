@@ -7,6 +7,7 @@ Vue.use(Router);
 import Index from 'components/index/Index'; // 主页
 import ArticleDetail from 'components/article-detail/ArticleDetail';  // 文章详情页
 import AddArticle from '../components/admin/add-article/AddArticle';  // 添加文章页
+import Resume from '../components/resume/Resume.vue';  // 简历页
 
 // 配置路由
 export default new Router({
@@ -29,6 +30,12 @@ export default new Router({
       path: '/blogWaka/admin/addArticle',
       name: 'AddArticle',
       component: AddArticle
+    },
+    // 简历页
+    {
+      path: '/blogWaka/resume',
+      name: 'Resume',
+      component: Resume
     }
   ]
 });
