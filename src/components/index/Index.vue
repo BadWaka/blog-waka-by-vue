@@ -9,12 +9,10 @@
         <i class="material-icons">list</i>
       </mu-icon-button>
       <!--右侧GitHub链接-->
-      <router-link class="settings" to="/blogWaka/admin/addArticle">
-        <mu-icon-button>
-          <i class="material-icons">settings</i>
-          <!--<i class="iconfont icon-github"></i>-->
-        </mu-icon-button>
-      </router-link>
+      <mu-icon-button @click="settings">
+        <i class="material-icons">settings</i>
+        <!--<i class="iconfont icon-github"></i>-->
+      </mu-icon-button>
     </div>
 
     <!--点击抽屉开关打开的侧边菜单-->
@@ -53,6 +51,8 @@
   // 是因为在build/webpack.base.conf.js中alias字段里定义了别名
   import ArticleItem from 'components/index/article-item/ArticleItem.vue';
 
+  import router from '../../router';
+
   export default {
     // 包含的组件
     components: {
@@ -89,6 +89,10 @@
       // 跳转到GitHub
       github () {
         window.open('https://github.com/BadWaka');
+      },
+      // 跳转到控制台
+      settings () {
+        router.push('/blogWaka/admin/addArticle');
       }
     }
   };

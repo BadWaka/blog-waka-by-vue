@@ -1,23 +1,25 @@
 <template>
   <section class="page">
     <!--app bar-->
-    <mu-appbar title="添加文章">
+    <mu-appbar class="bg-color-primary" title="添加文章">
       <mu-icon-button icon='arrow_back' slot="left"/>
     </mu-appbar>
 
     <!--文章详情-->
     <mu-paper class="article" :zDepth="2">
       <form>
-        <mu-text-field label="标题" labelFloat fullWidth v-model="article.title"/>
+        <mu-text-field label="*标题" labelFloat fullWidth v-model="article.title"/>
+        <mu-text-field label="*类型" labelFloat fullWidth v-model="article.typeName"/>
         <mu-text-field label="简介" labelFloat fullWidth v-model="article.intro"/>
         <mu-text-field label="链接" labelFloat fullWidth v-model="article.link"/>
-        <mu-text-field label="类型" labelFloat fullWidth v-model="article.typeName"/>
         <mu-text-field label="图片地址" labelFloat fullWidth v-model="article.img"/>
-        <mu-text-field label="内容" labelFloat multiLine :rows="10" :rowsMax="30" fullWidth
+        <mu-text-field label="*内容" labelFloat multiLine :rows="10" :rowsMax="30" fullWidth
                        v-model="article.content"/>
-        <mu-raised-button label="添加" primary @click="addArticle"/>
+        <mu-raised-button class="bg-color-primary" label="添加" primary @click="formValidate"/>
       </form>
     </mu-paper>
+
+    <mu-snackbar v-if="snackbar" message="请填写带*字段" action="关闭" @actionClick="hideSnackbar" @close="hideSnackbar"/>
   </section>
 </template>
 
@@ -25,6 +27,9 @@
   export default {
     data () {
       return {
+        // snackbar
+        snackbar: false,
+        // 文章数据
         article: {
           title: '',
           intro: '',
@@ -36,8 +41,34 @@
       }
     },
     methods: {
+      showSnackbar () {
+        this.snackbar = true;
+        if (this.snackTimer) {
+          clearTimeout(this.snackTimer);
+        }
+        this.snackTimer = setTimeout(() => {
+          this.snackbar = false;
+        }, 2000);
+      },
+      hideSnackbar () {
+        this.snackbar = false;
+        if (this.snackTimer) {
+          clearTimeout(this.snackTimer);
+        }
+      },
+      // 表单校验
+      formValidate () {
+        if (!this.article.title || !this.article.typeName || !this.article.content) {
+          // 如果必填字段为空，弹出提示语
+          this.showSnackbar();
+          return;
+        }
+        this.addArticle();
+      },
+      // 添加文章
       addArticle () {
         console.log(JSON.stringify(this.article));
+        // 请求添加新文章接口
         this.$http.post('/blogWaka/admin/article/new', {
           article: this.article
         }).then(response => {
@@ -51,6 +82,9 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
+
+  // 引入颜色css
+  @import "../../../common/css/color.scss";
 
   .page {
     display: flex;
