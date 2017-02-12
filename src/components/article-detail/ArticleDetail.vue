@@ -82,7 +82,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 20px;
   }
 
   .app-bar {
@@ -91,13 +90,12 @@
 
   .article {
     width: 90%;
-    margin-top: 24px;
+    margin: 48px;
     padding: 48px;
   }
 
   .markdown {
     width: 100%;
   }
-
 
 </style>

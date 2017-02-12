@@ -7,9 +7,9 @@ const ArticleSchema = new mongoose.Schema({
   title: String,  // 文章名
   intro: String,  // 文章简介
   link: String,   // 文章链接
-  typeId: String, // 类型id
   typeName: String, // 类型名
   img: String,  // 文章图片
+  content: String,  // 文章内容
   meta: {
     createAt: { // 创建时间
       type: Date,

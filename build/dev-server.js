@@ -96,9 +96,9 @@ apiRoutes.post('/admin/article/new', function (req, res) {
       title: article.title,
       intro: article.intro,
       link: article.link,
-      typeId: article.typeId,
       typeName: article.typeName,
-      img: article.img
+      img: article.img,
+      content: article.content
     });
     articleTemp.save(function (err, article) {  // 保存至数据库
       if (err) {

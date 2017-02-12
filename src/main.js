@@ -8,7 +8,7 @@ import router from './router';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
-// 引入样式
+// 引入全局样式
 import 'common/css/index.scss';
 
 // 引入Muse-UI
@@ -16,9 +16,10 @@ import MuseUI from 'muse-ui';
 import 'muse-ui/dist/muse-ui.css'
 Vue.use(MuseUI);
 
-// 默认路由
-router.push('/');
-// router.push('/articleDetail');
+// 添加路由，最后一个路由是默认路由
+router.push('/blogWaka/articleDetail');
+router.push('/blogWaka/admin/addArticle');
+router.push('/blogWaka');
 
 // 在ESLint规定中，如果new了一个新对象，是必须要赋值给某一个变量的，否则会编译报错
 // 但是 new Vue 是不需要赋值给变量的，这时候就需要一个额外的例外

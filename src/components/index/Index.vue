@@ -9,9 +9,12 @@
         <i class="material-icons">list</i>
       </mu-icon-button>
       <!--右侧GitHub链接-->
-      <mu-icon-button @click="github">
-        <i class="iconfont icon-github"></i>
-      </mu-icon-button>
+      <router-link class="settings" to="/blogWaka/admin/addArticle">
+        <mu-icon-button>
+          <i class="material-icons">settings</i>
+          <!--<i class="iconfont icon-github"></i>-->
+        </mu-icon-button>
+      </router-link>
     </div>
 
     <!--点击抽屉开关打开的侧边菜单-->
@@ -32,7 +35,6 @@
       <div class="avatar"></div>
       <!--提示语 暂时写死，以后会从服务器取得-->
       <div class="welcome">Welcome to waka's blog</div>
-      <mu-raised-button label="添加数据" @click="addMockData"/>
     </header>
 
     <!--文章列表-->
@@ -87,22 +89,6 @@
       // 跳转到GitHub
       github () {
         window.open('https://github.com/BadWaka');
-      },
-      addMockData () {
-        // mock data
-        let article = {
-          title: '从零开始，教你用Webpack构建React基础工程',
-          intro: '随着前端代码越来越多，越来越复杂，整个工程变得越来越难以管理。所以，前端工程化已是必然的趋势，已经是2016年了，还在用手动添加依赖吗？快来学习用构建工具来管理web项目吧。',
-          link: 'http://www.jianshu.com/p/4df92c335617',
-          typeId: '1',
-          typeName: 'webpack',
-          img: 'http://upload-images.jianshu.io/upload_images/1828354-9205b1b29eb5b7a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'
-        };
-        this.$http.post('/blogWaka/admin/article/new', {
-          article: article
-        }).then(response => {
-          console.log(response);
-        });
       }
     }
   };
@@ -124,6 +110,10 @@
     width: 100%;
     color: #fff;
     background-color: $blue500;
+
+    /*.settings {*/
+    /*color: #fff;*/
+    /*}*/
   }
 
   .drawer-header {
@@ -134,7 +124,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 480px;
+    height: 440px;
     color: #fff;
     background-color: $blue500;
 
@@ -157,7 +147,7 @@
 
   /*文章列表*/
   .articles {
-    margin-top: -100px;
+    margin-top: -80px;
     display: flex;
     flex-direction: column;
     align-items: center;
