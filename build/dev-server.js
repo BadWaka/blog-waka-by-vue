@@ -12,7 +12,7 @@ const fs = require('fs');   // 因为要读取.md文件，所以引入文件读�
 const bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
 const mongoose = require('mongoose'); // 引入mongoose连接数据库
 const Article = require('../models/article');  // 引入Article Model
-
+const Type = require('../models/type');  // 引入Type Model
 
 let webpack = require('webpack');
 let proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
@@ -50,7 +50,62 @@ function handleError(err) {
   console.log(err);
 }
 
-// 请求文章列表
+// 请求所有类型
+apiRoutes.get('/types', function (req, res) {
+  Type.fetch(function (err, types) {
+    if (err) {
+      handleError(err);
+      return;
+    }
+    res.json({
+      errorCode: 0,
+      data: types
+    });
+  });
+});
+
+// admin post type 后台添加类型接口
+apiRoutes.post('/admin/type/new', function (req, res) {
+  console.log(req.body);
+
+  const typePost = req.body.type;
+  const typeName = typePost.typeName;
+  const id = typePost._id;
+
+  Type.findByTypeName(typeName, function (err, type) {
+    if (err) {
+      handleError(err);
+      return;
+    }
+    console.log(type);
+    // type === null 说明该类型数据库里没有，可以添加
+    if (type === null) {
+      // 新数据添加
+      let typeTemp = new Type({ // 调用构造方法构造model
+        typeName: typePost.typeName
+      });
+      typeTemp.save(function (err, type) {  // 保存至数据库
+        if (err) {
+          handleError(err);
+          return;
+        }
+        res.json({
+          errorCode: 0,
+          data: '添加成功'
+        });
+      });
+    }
+    // 数据库里有了该类型，不可以再添加
+    else {
+      res.json({
+        errorCode: -1,
+        data: '已有该类型'
+      });
+    }
+  });
+});
+
+// 请求所有文章
 apiRoutes.get('/articles', function (req, res) {
   Article.fetch(function (err, articles) {
     if (err) {
@@ -65,6 +120,23 @@ apiRoutes.get('/articles', function (req, res) {
     res.json({
       errorCode: 0,
       data: articles
+    });
+  });
+});
+
+// 根据类型请求文章
+apiRoutes.get('/articles/:typeName', function () {
+  const typeName = req.params.typeName;
+  console.log('typeName = ' + typeName);
+
+  Article.findByTypeName(id, function (err, article) {
+    if (err) {
+      handleError(err);
+      return;
+    }
+    res.json({
+      errorCode: 0,
+      data: article
     });
   });
 });
@@ -100,6 +172,7 @@ apiRoutes.post('/admin/article/new', function (req, res) {
       title: article.title,
       intro: article.intro,
       link: article.link,
+      typeId: article.typeId,
       typeName: article.typeName,
       img: article.img,
       content: article.content

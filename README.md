@@ -28,3 +28,7 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+# 值得记录的问题
+1. marked `#标题`不识别，必须是`# 标题`才可以
+2. vue-router跳转时记录滚动条位置，参考vue-router官网文档无效

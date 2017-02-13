@@ -3,14 +3,8 @@
  */
 const mongoose = require('mongoose');
 
-const ArticleSchema = new mongoose.Schema({
-  title: String,  // 文章名
-  intro: String,  // 文章简介
-  link: String,   // 文章链接
-  typeId: String, // 类型id
-  typeName: String, // 类型名
-  img: String,  // 文章图片
-  content: String,  // 文章内容
+const TypeSchema = new mongoose.Schema({
+  typeName: String,  // 类型名
   meta: {
     createAt: { // 创建时间
       type: Date,
@@ -24,7 +18,7 @@ const ArticleSchema = new mongoose.Schema({
 });
 
 // pre()的意思是，每次进行save操作之前，都会调用这个方法
-ArticleSchema.pre('save', function (next) {
+TypeSchema.pre('save', function (next) {
   // 判断数据是否是新添加的
   if (this.isNew) {
     // 如果是，则将创建时间和更新时间都设置为当前时间
@@ -37,7 +31,7 @@ ArticleSchema.pre('save', function (next) {
   next();
 });
 
-ArticleSchema.statics = {
+TypeSchema.statics = {
 
   // fetch方法，用来取出数据库里面所有的数据
   fetch: function (cb) {
@@ -56,10 +50,10 @@ ArticleSchema.statics = {
       .exec(cb);
   },
 
-  // 根据类型名称，查询
+  // 根据typeName，查询单条数据
   findByTypeName: function (typeName, cb) {
     return this
-      .find({
+      .findOne({
         typeName: typeName
       })
       .exec(cb);
@@ -67,4 +61,4 @@ ArticleSchema.statics = {
 };
 
 // 导出模式
-module.exports = ArticleSchema;
+module.exports = TypeSchema;

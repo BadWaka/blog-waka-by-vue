@@ -19,7 +19,7 @@ Vue.use(MuseUI);
 // 添加路由，最后一个路由是默认路由
 router.push('/blogWaka/articleDetail');
 router.push('/blogWaka/admin/addArticle');
-router.push('/blogWaka');
+// router.push('/blogWaka');
 // router.push('/blogWaka/resume');
 
 // 在ESLint规定中，如果new了一个新对象，是必须要赋值给某一个变量的，否则会编译报错

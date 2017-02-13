@@ -12,6 +12,7 @@ import Resume from '../components/resume/Resume.vue';  // 简历页
 // 配置路由
 export default new Router({
   linkActiveClass: 'active',  // 激活class类名
+  mode: 'history',  // 使用路由的history模式
   routes: [
     // 主页
     {
@@ -37,6 +38,19 @@ export default new Router({
       name: 'Resume',
       component: Resume
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPostion) {
+    // console.log('to = ');
+    // console.log(to);
+    // console.log('from = ');
+    // console.log(from);
+    // console.log('savedPostion = ');
+    // console.log(savedPostion);
+    if (savedPostion) {
+      return savedPostion;
+    } else {
+      return {x: 0, y: 520};
+    }
+  }
 });
 
