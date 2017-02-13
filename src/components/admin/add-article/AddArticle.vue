@@ -147,6 +147,8 @@
           article: this.article
         }).then(response => {
           console.log(response);
+          this.snackbarMsg = response.body.data;
+          this.showSnackbar();
         }).then(response => {
           console.log(response);
         });

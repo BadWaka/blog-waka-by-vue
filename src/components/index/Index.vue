@@ -16,7 +16,7 @@
     </div>
 
     <!--点击抽屉开关打开的侧边菜单-->
-    <mu-drawer right :open="isDrawerOpen" @close="drawerToggle">
+    <mu-drawer class="drawer" right :open="isDrawerOpen" @close="drawerToggle">
       <!--标题栏-->
       <mu-appbar class="drawer-header" title="类别"/>
       <mu-list>
@@ -142,7 +142,10 @@
     color: #fff;
     background-color: $blue500;
     z-index: 999;
+  }
 
+  .drawer {
+    z-index: 9999;
   }
 
   .drawer-header {

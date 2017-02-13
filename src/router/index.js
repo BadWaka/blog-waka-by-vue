@@ -46,11 +46,11 @@ export default new Router({
     // console.log(from);
     // console.log('savedPostion = ');
     // console.log(savedPostion);
-    if (savedPostion) {
-      return savedPostion;
-    } else {
-      return {x: 0, y: 520};
-    }
+    // if (savedPostion) {
+    //   return savedPostion;
+    // } else {
+    //   return {x: 0, y: 520};
+    // }
   }
 });
 
