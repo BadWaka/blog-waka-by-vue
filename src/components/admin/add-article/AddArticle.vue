@@ -15,11 +15,12 @@
         <mu-text-field label="图片地址" labelFloat fullWidth v-model="article.img"/>
         <mu-text-field label="*内容" labelFloat multiLine :rows="10" :rowsMax="30" fullWidth
                        v-model="article.content"/>
-        <mu-raised-button class="bg-color-primary" label="添加" primary @click="formValidate"/>
+        <mu-raised-button class="bg-color-primary btn" label="添加" primary @click="formValidate"/>
+        <mu-raised-button class="bg-color-primary btn" label="添加假数据" primary @click="addMockData"/>
       </form>
     </mu-paper>
 
-    <mu-snackbar v-if="snackbar" message="请填写带*字段" action="关闭" @actionClick="hideSnackbar" @close="hideSnackbar"/>
+    <mu-snackbar v-if="snackbar" :message="snackbarMsg" action="关闭" @actionClick="hideSnackbar" @close="hideSnackbar"/>
   </section>
 </template>
 
@@ -28,7 +29,8 @@
     data () {
       return {
         // snackbar
-        snackbar: false,
+        snackbar: false,  // snackbar开关
+        snackbarMsg: '',  // snackbar提示语
         // 文章数据
         article: {
           title: '',
@@ -66,6 +68,7 @@
       formValidate () {
         if (!this.article.title || !this.article.typeName || !this.article.content) {
           // 如果必填字段为空，弹出提示语
+          this.snackbarMsg = '请填写带*字段';
           this.showSnackbar();
           return;
         }
@@ -79,6 +82,26 @@
           article: this.article
         }).then(response => {
           console.log(response);
+        }).then(response => {
+          console.log(response);
+        });
+      },
+      // 添加假数据
+      addMockData () {
+        const article = {
+          title: '标题',
+          typeName: '类型',
+          content: '内容'
+        };
+        // 请求添加新文章接口
+        this.$http.post('/blogWaka/admin/article/new', {
+          article: article
+        }).then(response => {
+          console.log(response);
+          if (response.body.errorCode === 0) {
+            this.snackbarMsg = response.body.data;
+            this.showSnackbar();
+          }
         }).then(response => {
           console.log(response);
         });
@@ -107,5 +130,9 @@
   .article {
     margin: 48px;
     width: 90%;
+
+    .btn {
+      margin-bottom: 24px;
+    }
   }
 </style>

@@ -57,6 +57,11 @@ apiRoutes.get('/articles', function (req, res) {
       handleError(err);
       return;
     }
+    // 处理数据
+    articles = articles.map(function (article) {
+      article.content = ''; // 删除content字段用来减少网络传输的字节，content详情页再获取
+      return article;
+    });
     res.json({
       errorCode: 0,
       data: articles

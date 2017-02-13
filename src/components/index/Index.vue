@@ -1,6 +1,6 @@
 <template>
   <!--index页整个容器-->
-  <section>
+  <section class="page">
 
     <!--顶部工具栏 使用fixed固定在顶部-->
     <div class="top">
@@ -42,6 +42,12 @@
       <article-item v-for="article in articles" :article="article"></article-item>
     </section>
 
+    <!--底部分页栏-->
+    <section class="pagination-wrapper">
+      <mu-pagination :total="total" :current="current" @pageChange="paginationClick"
+                     :pageSize="pageSize"></mu-pagination>
+    </section>
+
   </section>
 </template>
 
@@ -61,7 +67,11 @@
     // 数据
     data () {
       return {
-        articles: {}, // 文章数据，请求获得
+        current: 1, // 当前页数，Muse-UI默认是从1开始算的
+        total: 1,  // 数据总数，默认写0的话 Muse-UI会出现一些问题
+        pageSize: 10,  // 每页数据条数，默认每页10条
+        articlesFull: {}, // 总的文章数据
+        articles: {}, // 要展现的文章数据
         isDrawerOpen: false,  // 侧边栏开关
         typeArray: ['HTML', 'CSS', 'Sass', 'Java Script', 'ECMAScript', 'Vue.js', 'React', 'React Native', '微信小程序', 'Node.js', 'MongoDB', 'macOS', 'Linux']  // 类型数组，mock数据，后续会从服务器上取得
       }
@@ -75,7 +85,9 @@
           this.articles = 'status = ' + response.status + ' errorCode = ' + response.body.errorCode;
           return;
         }
-        this.articles = response.body.data;
+        this.articlesFull = response.body.data; // 获得所有数据
+        this.total = this.articlesFull.length;  // 获得总数目，用来智能展示分页页数
+        this.showArticles();
       }, response => {  // 请求失败，因为mock数据没有请求失败，所以暂时没有处理
         this.articles = '请求失败';
       });
@@ -93,6 +105,21 @@
       // 跳转到控制台
       settings () {
         router.push('/blogWaka/admin/addArticle');
+      },
+      // 分页栏点击
+      paginationClick (index) {
+        console.log('分页栏点击 index = ' + index);
+        this.current = index;
+        this.showArticles();
+      },
+      // 根据页数展示数据
+      showArticles () {
+        // 假设默认每页10条数据
+        // current是1,则从下标0开始，到9结束
+        // 传入的current是2,则从下标10开始，到19结束
+        const start = (this.current - 1) * this.pageSize;
+        const end = this.current * this.pageSize - 1;
+        this.articles = this.articlesFull.slice(start, end);
       }
     }
   };
@@ -114,10 +141,8 @@
     width: 100%;
     color: #fff;
     background-color: $blue500;
+    z-index: 999;
 
-    /*.settings {*/
-    /*color: #fff;*/
-    /*}*/
   }
 
   .drawer-header {
@@ -128,7 +153,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 440px;
+    height: 360px;
     color: #fff;
     background-color: $blue500;
 
@@ -151,9 +176,15 @@
 
   /*文章列表*/
   .articles {
-    margin-top: -80px;
+    margin-top: 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
   }
 </style>
