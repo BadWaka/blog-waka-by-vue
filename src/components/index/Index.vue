@@ -21,7 +21,7 @@
       <mu-appbar class="drawer-header" title="类别"/>
       <mu-list>
         <!--类别List-->
-        <mu-list-item v-for="type in typeArray" :title="type"/>
+        <mu-list-item v-for="type in types" :title="type.typeName"/>
         <!--关闭栏-->
         <mu-list-item @click="drawerToggle" title="关闭"/>
       </mu-list>
@@ -73,24 +73,13 @@
         articlesFull: {}, // 总的文章数据
         articles: {}, // 要展现的文章数据
         isDrawerOpen: false,  // 侧边栏开关
-        typeArray: ['HTML', 'CSS', 'Sass', 'Java Script', 'ECMAScript', 'Vue.js', 'React', 'React Native', '微信小程序', 'Node.js', 'MongoDB', 'macOS', 'Linux']  // 类型数组，mock数据，后续会从服务器上取得
+        types: []  // 类型
       }
     },
     // 实例创建后被调用；生命周期钩子
     created () {
-      // 请求文章列表数据
-      this.$http.get('/blogWaka/articles').then(response => {  // 请求成功
-        if (response.status !== 200) {
-          // 输出错误信息
-          this.articles = 'status = ' + response.status + ' errorCode = ' + response.body.errorCode;
-          return;
-        }
-        this.articlesFull = response.body.data; // 获得所有数据
-        this.total = this.articlesFull.length;  // 获得总数目，用来智能展示分页页数
-        this.showArticles();
-      }, response => {  // 请求失败，因为mock数据没有请求失败，所以暂时没有处理
-        this.articles = '请求失败';
-      });
+      this.getArticles();
+      this.getTypes();
     },
     // 方法
     methods: {
@@ -105,6 +94,36 @@
       // 跳转到控制台
       settings () {
         router.push('/blogWaka/admin/addArticle');
+      },
+      // 获得所有文章
+      getArticles () {
+        // 请求文章列表数据
+        this.$http.get('/blogWaka/articles').then(response => {  // 请求成功
+          if (response.status !== 200) {
+            // 输出错误信息
+            this.articles = 'status = ' + response.status + ' errorCode = ' + response.body.errorCode;
+            return;
+          }
+          this.articlesFull = response.body.data; // 获得所有数据
+          this.total = this.articlesFull.length;  // 获得总数目，用来智能展示分页页数
+          this.showArticles();
+        }, response => {  // 请求失败，因为mock数据没有请求失败，所以暂时没有处理
+          this.articles = '请求失败';
+        });
+      },
+      // 获得所有类型
+      getTypes () {
+        console.log('getTypes');
+        this.$http.get('/blogWaka/types').then(response => {
+          // 请求成功
+          console.log(response);
+          if (response.body.errorCode === 0) {
+            this.types = response.body.data;
+          }
+        }, response => {
+          // 请求失败
+          console.log(response);
+        });
       },
       // 分页栏点击
       paginationClick (index) {

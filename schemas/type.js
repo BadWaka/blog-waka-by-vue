@@ -37,7 +37,7 @@ TypeSchema.statics = {
   fetch: function (cb) {
     return this
       .find()
-      .sort('meta.updateAt')  // 排序;根据更新时间排序
+      .sort('typeName')  // 排序;根据类型名排序
       .exec(cb);
   },
 
