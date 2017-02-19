@@ -3,10 +3,10 @@ require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
 
-var ora = require('ora')
+var ora = require('ora')  // 执行打包中的提示(转圈的图案)
 var path = require('path')
 var chalk = require('chalk')
-var shell = require('shelljs')
+var shell = require('shelljs')  // node可以执行shell命令
 var webpack = require('webpack')
 var config = require('../config')
 var webpackConfig = require('./webpack.prod.conf')

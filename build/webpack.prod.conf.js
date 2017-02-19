@@ -5,7 +5,7 @@ var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')  // webpack插件，可以把css文件单独提取出来，而不是打包到js文件中
 var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
@@ -14,10 +14,10 @@ var webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
-      extract: true
+      extract: true // 表示可以把css文件提取出来
     })
   },
-  devtool: config.build.productionSourceMap ? '#source-map' : false,
+  devtool: config.build.productionSourceMap ? '#source-map' : false,  // 通过该配置生成SourceMap
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
@@ -44,7 +44,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         : config.build.index,
       template: 'index.html',
       inject: true,
-      minify: {
+      minify: { // 生成压缩的html
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true
