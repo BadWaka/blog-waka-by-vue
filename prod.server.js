@@ -1,30 +1,47 @@
-/**
- * Created by BadWaka on 2017/2/19.
- */
 'use strict';
 
-let express = require('express');
-let config = require('./config/index');
+// 生产环境服务器
 
-let port = process.env.PORT || config.build.port;
+const express = require('express'); // 引入express
+const config = require('./config/index'); // 引入配置文件
+const mongoose = require('mongoose'); // 引入mongoose连接数据库
+const bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
+const Article = require('./models/article');  // 引入Article Model
+const Type = require('./models/type');  // 引入Type Model
 
+// 初始化
+let port = process.env.PORT || config.build.port; // 取当前环境下的端口，如果没有的话就去取config文件里的端口
 let app = express();
-
 let router = express.Router();
+const apiRoutes = express.Router(); // 定义Express的路由，并编写接口
 
+// 定义接口
 router.get('/', function (req, res, next) {
   req.url = '/index.html';
   next();
 });
 
-app.use(router);
 
 // 连接数据库
 mongoose.connect('mongodb://localhost/blogWaka');
 
-// 定义Express的路由，并编写接口
-var apiRoutes = express.Router();
+// 使用中间件
+app.use(router);
+app.use(express.static('./dist'));  // 规定express的dist目录
+app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不然是undefined
+app.use('/blogWaka', apiRoutes);  // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
 
+
+// 监听端口
+app.listen(port, function (err) {
+  if (err) {
+    handleError(err);
+    return;
+  }
+  console.log('Listening at http://localhost:' + port);
+});
+
+// ---------------------------------------路由---------------------------------------
 // 错误处理函数
 function handleError(err) {
   console.log(err);
@@ -48,9 +65,9 @@ apiRoutes.get('/types', function (req, res) {
 apiRoutes.post('/admin/type/new', function (req, res) {
   console.log(req.body);
 
-  var typePost = req.body.type;
-  var typeName = typePost.typeName;
-  var id = typePost._id;
+  let typePost = req.body.type;
+  let typeName = typePost.typeName;
+  let id = typePost._id;
 
   Type.findByTypeName(typeName, function (err, type) {
     if (err) {
@@ -61,7 +78,7 @@ apiRoutes.post('/admin/type/new', function (req, res) {
     // type === null 说明该类型数据库里没有，可以添加
     if (type === null) {
       // 新数据添加
-      var typeTemp = new Type({ // 调用构造方法构造model
+      let typeTemp = new Type({ // 调用构造方法构造model
         typeName: typePost.typeName
       });
       typeTemp.save(function (err, type) {  // 保存至数据库
@@ -106,7 +123,7 @@ apiRoutes.get('/articles', function (req, res) {
 
 // 根据类型请求文章
 apiRoutes.get('/articles/:typeName', function () {
-  var typeName = req.params.typeName;
+  let typeName = req.params.typeName;
   console.log('typeName = ' + typeName);
 
   Article.findByTypeName(id, function (err, article) {
@@ -123,7 +140,7 @@ apiRoutes.get('/articles/:typeName', function () {
 
 // 请求具体的某一篇文章
 apiRoutes.get('/articleDetail/:id', function (req, res) {
-  var id = req.params.id;
+  let id = req.params.id;
   console.log('id = ' + id);
 
   Article.findById(id, function (err, article) {
@@ -142,13 +159,13 @@ apiRoutes.get('/articleDetail/:id', function (req, res) {
 apiRoutes.post('/admin/article/new', function (req, res) {
   console.log(req.body);
 
-  var article = req.body.article;
-  var id = article._id;
+  let article = req.body.article;
+  let id = article._id;
 
   // 判断是否是添加新的数据还是更新旧的数据
   if (id === undefined) {
     // 新数据添加
-    var articleTemp = new Article({ // 调用构造方法构造model
+    let articleTemp = new Article({ // 调用构造方法构造model
       title: article.title,
       intro: article.intro,
       link: article.link,
@@ -182,7 +199,4 @@ apiRoutes.post('/admin/article/new', function (req, res) {
   }
 });
 
-// 使用bodyParser将req.body解析成json，要不然是undefined
-app.use(bodyParser.json());
-// 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
-app.use('/blogWaka', apiRoutes);
+
