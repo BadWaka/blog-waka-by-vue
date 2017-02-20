@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');  // 引入body-parser解析请求过�
 const Article = require('./models/article');  // 引入Article Model
 const Type = require('./models/type');  // 引入Type Model
 const router = express.Router();
-const apiRoutes = express.Router(); // 定义Express的路由，并编写接口
+const blogWakaRouter = express.Router(); // 定义Express的路由，并编写接口
 
 // 初始化
 let port = process.env.PORT || config.build.port; // 取当前环境下的端口，如果没有的话就去取config文件里的端口
@@ -22,7 +22,7 @@ mongoose.connect('mongodb://localhost/blogWaka');
 app.use(router);
 app.use(express.static('./dist'));  // 规定express的dist目录
 app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不然是undefined
-app.use('/blogWaka', apiRoutes);  // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
+app.use('/blogWaka', blogWakaRouter);  // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
 
 // 监听端口
 app.listen(port, function (err) {
@@ -46,10 +46,15 @@ router.get('/', function (req, res, next) {
   next();
 });
 
+router.get('/blogWaka', function (req, res, next) {
+  req.url = '/index.html';
+  next();
+});
+
 /*-----------------------------文章相关----------------------------*/
 
 // 请求所有文章
-apiRoutes.get('/articles', function (req, res) {
+blogWakaRouter.get('/articles', function (req, res) {
   Article.fetch(function (err, articles) {
     if (err) {
       handleError(err);
@@ -68,7 +73,7 @@ apiRoutes.get('/articles', function (req, res) {
 });
 
 // 请求具体的某一篇文章
-apiRoutes.get('/articleDetail/:id', function (req, res) {
+blogWakaRouter.get('/articleDetail/:id', function (req, res) {
   let id = req.params.id;
   console.log('id = ' + id);
 
@@ -85,7 +90,7 @@ apiRoutes.get('/articleDetail/:id', function (req, res) {
 });
 
 // 根据类型请求文章
-apiRoutes.get('/articles/:typeName', function () {
+blogWakaRouter.get('/articles/:typeName', function () {
   let typeName = req.params.typeName;
   console.log('typeName = ' + typeName);
 
@@ -102,7 +107,7 @@ apiRoutes.get('/articles/:typeName', function () {
 });
 
 // admin post article 后台添加文章接口
-apiRoutes.post('/admin/article/new', function (req, res) {
+blogWakaRouter.post('/admin/article/new', function (req, res) {
   console.log(req.body);
 
   let article = req.body.article;
@@ -148,7 +153,7 @@ apiRoutes.post('/admin/article/new', function (req, res) {
 /*-----------------------------类型相关----------------------------*/
 
 // 请求所有类型
-apiRoutes.get('/types', function (req, res) {
+blogWakaRouter.get('/types', function (req, res) {
   Type.fetch(function (err, types) {
     if (err) {
       handleError(err);
@@ -162,7 +167,7 @@ apiRoutes.get('/types', function (req, res) {
 });
 
 // admin post type 后台添加类型接口
-apiRoutes.post('/admin/type/new', function (req, res) {
+blogWakaRouter.post('/admin/type/new', function (req, res) {
   console.log(req.body);
 
   let typePost = req.body.type;

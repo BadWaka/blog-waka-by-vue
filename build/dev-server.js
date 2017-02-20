@@ -2,50 +2,50 @@
 
 require('./check-versions')();
 
-var config = require('../config');
+let config = require('../config');
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
 
-var opn = require('opn');
-var path = require('path');
-var express = require('express');
-var fs = require('fs');   // 因为要读取.md文件，所以引入文件读取模块fs
-var bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
-var mongoose = require('mongoose'); // 引入mongoose连接数据库
-var Article = require('../models/article');  // 引入Article Model
-var Type = require('../models/type');  // 引入Type Model
+let opn = require('opn');
+let path = require('path');
+let express = require('express');
+let fs = require('fs');   // 因为要读取.md文件，所以引入文件读取模块fs
+let bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
+let mongoose = require('mongoose'); // 引入mongoose连接数据库
+let Article = require('../models/article');  // 引入Article Model
+let Type = require('../models/type');  // 引入Type Model
 
-var webpack = require('webpack');
-var proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
-var webpackConfig = process.env.NODE_ENV === 'testing'
+let webpack = require('webpack');
+let proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
+let webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf');
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port;
+let port = process.env.PORT || config.dev.port;
 // automatically open browser, if not set will be false
-var autoOpenBrowser = config.dev.autoOpenBrowser;
+let autoOpenBrowser = config.dev.autoOpenBrowser;
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
-var proxyTable = config.dev.proxyTable;
+let proxyTable = config.dev.proxyTable;
 
-var app = express();
-var compiler = webpack(webpackConfig);
+let app = express();
+let compiler = webpack(webpackConfig);
 
 
 /*********************************************************************/
 // TODO 编写本地服务 使用mock数据
 
 // 引入data.json
-var appData = require('../data.json');
-var articles = appData.articles;  // 拿到文章列表数据
+let appData = require('../data.json');
+let articles = appData.articles;  // 拿到文章列表数据
 
 // 连接数据库
 mongoose.connect('mongodb://localhost/blogWaka');
 
 // 定义Express的路由，并编写接口
-var apiRoutes = express.Router();
+let apiRoutes = express.Router();
 
 // 错误处理函数
 function handleError(err) {
@@ -70,9 +70,9 @@ apiRoutes.get('/types', function (req, res) {
 apiRoutes.post('/admin/type/new', function (req, res) {
   console.log(req.body);
 
-  var typePost = req.body.type;
-  var typeName = typePost.typeName;
-  var id = typePost._id;
+  let typePost = req.body.type;
+  let typeName = typePost.typeName;
+  let id = typePost._id;
 
   Type.findByTypeName(typeName, function (err, type) {
     if (err) {
@@ -83,7 +83,7 @@ apiRoutes.post('/admin/type/new', function (req, res) {
     // type === null 说明该类型数据库里没有，可以添加
     if (type === null) {
       // 新数据添加
-      var typeTemp = new Type({ // 调用构造方法构造model
+      let typeTemp = new Type({ // 调用构造方法构造model
         typeName: typePost.typeName
       });
       typeTemp.save(function (err, type) {  // 保存至数据库
@@ -128,7 +128,7 @@ apiRoutes.get('/articles', function (req, res) {
 
 // 根据类型请求文章
 apiRoutes.get('/articles/:typeName', function () {
-  var typeName = req.params.typeName;
+  let typeName = req.params.typeName;
   console.log('typeName = ' + typeName);
 
   Article.findByTypeName(id, function (err, article) {
@@ -145,7 +145,7 @@ apiRoutes.get('/articles/:typeName', function () {
 
 // 请求具体的某一篇文章
 apiRoutes.get('/articleDetail/:id', function (req, res) {
-  var id = req.params.id;
+  let id = req.params.id;
   console.log('id = ' + id);
 
   Article.findById(id, function (err, article) {
@@ -164,13 +164,13 @@ apiRoutes.get('/articleDetail/:id', function (req, res) {
 apiRoutes.post('/admin/article/new', function (req, res) {
   console.log(req.body);
 
-  var article = req.body.article;
-  var id = article._id;
+  let article = req.body.article;
+  let id = article._id;
 
   // 判断是否是添加新的数据还是更新旧的数据
   if (id === undefined) {
     // 新数据添加
-    var articleTemp = new Article({ // 调用构造方法构造model
+    let articleTemp = new Article({ // 调用构造方法构造model
       title: article.title,
       intro: article.intro,
       link: article.link,
@@ -211,12 +211,12 @@ app.use('/blogWaka', apiRoutes);
 /*********************************************************************/
 
 
-var devMiddleware = require('webpack-dev-middleware')(compiler, {
+let devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
   quiet: true
 });
 
-var hotMiddleware = require('webpack-hot-middleware')(compiler, {
+let hotMiddleware = require('webpack-hot-middleware')(compiler, {
   log: () => {
   }
 });
@@ -230,7 +230,7 @@ compiler.plugin('compilation', function (compilation) {
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context];
+  let options = proxyTable[context];
   if (typeof options === 'string') {
     options = {target: options}
   }
@@ -248,10 +248,10 @@ app.use(devMiddleware);
 app.use(hotMiddleware);
 
 // serve pure static assets
-var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
+let staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
 
-var uri = 'http://localhost:' + port;
+let uri = 'http://localhost:' + port;
 
 devMiddleware.waitUntilValid(function () {
   console.log('> Listening at ' + uri + '\n')
