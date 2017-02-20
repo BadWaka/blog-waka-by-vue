@@ -9,10 +9,9 @@
     <mu-paper class="article" :zDepth="2">
       <form>
         <mu-text-field label="*标题" labelFloat fullWidth v-model="article.title"/>
-        <!--v-model="article.typeId_typeName"-->
         <mu-select-field class="type-select" label="*类型" :maxHeight="300" labelFloat v-model="currentTypeIndex">
           <mu-menu-item v-for="(type,index) in types" :title="type.typeName" :value="index"/>
-          <mu-menu-item title="添加新类型" value="-1" @click="openDialog"/>
+          <mu-menu-item title="添加新类型" value="-2" @click="openAddTypeDialog"/>
         </mu-select-field>
         <mu-text-field label="简介" labelFloat fullWidth v-model="article.intro"/>
         <mu-text-field label="链接" labelFloat fullWidth v-model="article.link"/>
@@ -26,15 +25,24 @@
     <!--提示框-->
     <mu-snackbar v-if="snackbar" :message="snackbarMsg" action="关闭" @actionClick="hideSnackbar" @close="hideSnackbar"/>
     <!--添加新类型对话框-->
-    <mu-dialog :open="dialog" title="添加新类型" @close="closeDialog">
+    <mu-dialog :open="addTypeDialogToggle" title="添加新类型" @close="closeAddTypeDialog">
       <mu-text-field class="full-width" label="请输入类型名" labelFloat v-model="newType"/>
-      <mu-flat-button slot="actions" @click="closeDialog" primary label="取消"/>
+      <mu-flat-button slot="actions" @click="closeAddTypeDialog" primary label="取消"/>
       <mu-flat-button slot="actions" primary @click="btnAddType" label="确定"/>
+    </mu-dialog>
+    <!--添加新文章成功对话框-->
+    <mu-dialog :open="addArticleSuccessDialogToggle" :title="addArticleSuccessDialogTitle"
+               @close="closeAddArticleSuccessDialog">
+      <mu-flat-button slot="actions" primary @click="btnContinueAdd" label="继续添加"/>
+      <mu-flat-button slot="actions" primary @click="btnViewArticle" label="查看文章"/>
     </mu-dialog>
   </section>
 </template>
 
 <script>
+
+  import router from '../../../router';
+
   export default {
     data () {
       return {
@@ -45,7 +53,9 @@
         snackbar: false,  // snackbar开关
         snackbarMsg: '',  // snackbar提示语
         // dialog
-        dialog: false,
+        addTypeDialogToggle: false, // 添加新类型对话框，开关
+        addArticleSuccessDialogToggle: false,  // 添加新文章成功对话框，开关
+        addArticleSuccessDialogTitle: '',  // 添加新文章成功对话框，开关
         // 文章数据
         article: {
           title: '',
@@ -84,13 +94,19 @@
           clearTimeout(this.snackTimer);
         }
       },
-      // 打开对话框
-      openDialog () {
-        this.dialog = true;
+      // 添加类型对话框
+      openAddTypeDialog () {
+        this.addTypeDialogToggle = true;
       },
-      // 关闭对话框
-      closeDialog () {
-        this.dialog = false;
+      closeAddTypeDialog () {
+        this.addTypeDialogToggle = false;
+      },
+      // 添加文章成功对话框
+      openAddArticleSuccessDialog () {
+        this.addArticleSuccessDialogToggle = true;
+      },
+      closeAddArticleSuccessDialog () {
+        this.addArticleSuccessDialogToggle = false;
       },
       /**
        * 获得所有类型
@@ -152,7 +168,7 @@
           }
           this.snackbarMsg = response.body.data;
           this.showSnackbar();
-          this.closeDialog();
+          this.closeAddTypeDialog();
         }, response => {
           console.log('请求失败 response = ');
           console.log(response);
@@ -161,14 +177,13 @@
       // 点击添加文章按钮
       btnAddArticle () {
         console.log('当前选中的文章类型的下标 currentTypeIndex = ' + this.currentTypeIndex);
-        this.currentTypeIndex = 0;
+        this.addArticleFormValidate();
       },
       // 文章表单校验
       addArticleFormValidate () {
-        console.log(JSON.stringify(this.article));
-        const array = this.article.typeId_typeName.split('_');
-        this.article.typeId = array[0];
-        this.article.typeName = array[1];
+        console.log('文章表单校验 addArticleFormValidate');
+        this.article.typeId = this.types[this.currentTypeIndex]._id;
+        this.article.typeName = this.types[this.currentTypeIndex].typeName;
         if (!this.article.title || !this.article.typeId || !this.article.typeName || !this.article.content) {
           // 如果必填字段为空，弹出提示语
           this.snackbarMsg = '请填写带*字段';
@@ -179,17 +194,45 @@
       },
       // 添加文章
       addArticle () {
-        console.log(JSON.stringify(this.article));
+        console.log('添加文章 addArticle');
         // 请求添加新文章接口
         this.$http.post('/blogWaka/admin/article/new', {
           article: this.article
         }).then(response => {
+          console.log('请求成功 response = ');
           console.log(response);
-          this.snackbarMsg = response.body.data;
-          this.showSnackbar();
-        }).then(response => {
+          this.addArticleSuccessDialogTitle = response.body.data;
+          this.newArticleId = response.body.articleId;  // 拿到新文章的id
+          this.openAddArticleSuccessDialog();
+        }, response => {
+          console.log('请求失败 response = ');
           console.log(response);
         });
+      },
+      // 继续添加
+      btnContinueAdd () {
+        console.log('继续添加 btnContinueAdd');
+        // 清空文章数据
+        this.article = {
+          title: '',
+          intro: '',
+          link: '',
+          typeId_typeName: '',
+          typeId: '',
+          typeName: '',
+          img: '',
+          content: ''
+        };
+        // 重置选中的类型
+        this.currentTypeIndex = '';
+        // 关闭对话框
+        this.closeAddArticleSuccessDialog();
+      },
+      // 查看文章
+      btnViewArticle () {
+        console.log('查看文章 btnViewArticle');
+        const articleId = this.newArticleId;  // 拿到文章id
+        router.push('/blogWaka/articleDetail/' + articleId);  // 跳转到文章详情页
       }
     }
   };
