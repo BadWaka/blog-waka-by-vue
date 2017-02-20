@@ -8,6 +8,8 @@ const mongoose = require('mongoose'); // 引入mongoose连接数据库
 const bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
 const Article = require('./models/article');  // 引入Article Model
 const Type = require('./models/type');  // 引入Type Model
+const router = express.Router();
+const apiRoutes = express.Router(); // 定义Express的路由，并编写接口
 
 // 初始化
 let port = process.env.PORT || config.build.port; // 取当前环境下的端口，如果没有的话就去取config文件里的端口
@@ -37,9 +39,6 @@ function handleError(err) {
 }
 
 /*-----------------------------路由----------------------------*/
-
-const router = express.Router();
-const apiRoutes = express.Router(); // 定义Express的路由，并编写接口
 
 // 定义接口
 router.get('/', function (req, res, next) {
