@@ -35,80 +35,27 @@ let compiler = webpack(webpackConfig);
 
 
 /*********************************************************************/
-// TODO 编写本地服务 使用mock数据
-
-// 引入data.json
-let appData = require('../data.json');
-let articles = appData.articles;  // 拿到文章列表数据
+// TODO 服务
 
 // 连接数据库
 mongoose.connect('mongodb://localhost/blogWaka');
 
 // 定义Express的路由，并编写接口
-let apiRoutes = express.Router();
+let blogWakaRouter = express.Router();
+
+// 使用中间件
+app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不然是undefined
+app.use('/blogWaka', blogWakaRouter); // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
 
 // 错误处理函数
 function handleError(err) {
   console.log(err);
 }
 
-// 请求所有类型
-apiRoutes.get('/types', function (req, res) {
-  Type.fetch(function (err, types) {
-    if (err) {
-      handleError(err);
-      return;
-    }
-    res.json({
-      errorCode: 0,
-      data: types
-    });
-  });
-});
-
-// admin post type 后台添加类型接口
-apiRoutes.post('/admin/type/new', function (req, res) {
-  console.log(req.body);
-
-  let typePost = req.body.type;
-  let typeName = typePost.typeName;
-  let id = typePost._id;
-
-  Type.findByTypeName(typeName, function (err, type) {
-    if (err) {
-      handleError(err);
-      return;
-    }
-    console.log(type);
-    // type === null 说明该类型数据库里没有，可以添加
-    if (type === null) {
-      // 新数据添加
-      let typeTemp = new Type({ // 调用构造方法构造model
-        typeName: typePost.typeName
-      });
-      typeTemp.save(function (err, type) {  // 保存至数据库
-        if (err) {
-          handleError(err);
-          return;
-        }
-        res.json({
-          errorCode: 0,
-          data: '添加成功'
-        });
-      });
-    }
-    // 数据库里有了该类型，不可以再添加
-    else {
-      res.json({
-        errorCode: -1,
-        data: '已有该类型'
-      });
-    }
-  });
-});
+/*-----------------------------文章相关----------------------------*/
 
 // 请求所有文章
-apiRoutes.get('/articles', function (req, res) {
+blogWakaRouter.get('/articles', function (req, res) {
   Article.fetch(function (err, articles) {
     if (err) {
       handleError(err);
@@ -127,7 +74,7 @@ apiRoutes.get('/articles', function (req, res) {
 });
 
 // 根据类型请求文章
-apiRoutes.get('/articles/:typeName', function () {
+blogWakaRouter.get('/articles/:typeName', function () {
   let typeName = req.params.typeName;
   console.log('typeName = ' + typeName);
 
@@ -144,7 +91,7 @@ apiRoutes.get('/articles/:typeName', function () {
 });
 
 // 请求具体的某一篇文章
-apiRoutes.get('/articleDetail/:id', function (req, res) {
+blogWakaRouter.get('/articleDetail/:id', function (req, res) {
   let id = req.params.id;
   console.log('id = ' + id);
 
@@ -161,7 +108,7 @@ apiRoutes.get('/articleDetail/:id', function (req, res) {
 });
 
 // admin post article 后台添加文章接口
-apiRoutes.post('/admin/article/new', function (req, res) {
+blogWakaRouter.post('/admin/article/new', function (req, res) {
   console.log(req.body);
 
   let article = req.body.article;
@@ -206,10 +153,63 @@ apiRoutes.post('/admin/article/new', function (req, res) {
   }
 });
 
-// 使用bodyParser将req.body解析成json，要不然是undefined
-app.use(bodyParser.json());
-// 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
-app.use('/blogWaka', apiRoutes);
+/*-----------------------------类型相关----------------------------*/
+
+// 请求所有类型
+blogWakaRouter.get('/types', function (req, res) {
+  Type.fetch(function (err, types) {
+    if (err) {
+      handleError(err);
+      return;
+    }
+    res.json({
+      errorCode: 0,
+      data: types
+    });
+  });
+});
+
+// admin post type 后台添加类型接口
+blogWakaRouter.post('/admin/type/new', function (req, res) {
+  console.log(req.body);
+
+  let typePost = req.body.type;
+  let typeName = typePost.typeName;
+  let id = typePost._id;
+
+  Type.findByTypeName(typeName, function (err, type) {
+    if (err) {
+      handleError(err);
+      return;
+    }
+    console.log(type);
+    // type === null 说明该类型数据库里没有，可以添加
+    if (type === null) {
+      // 新数据添加
+      let typeTemp = new Type({ // 调用构造方法构造model
+        typeName: typePost.typeName
+      });
+      typeTemp.save(function (err, type) {  // 保存至数据库
+        if (err) {
+          handleError(err);
+          return;
+        }
+        res.json({
+          errorCode: 0,
+          data: '添加成功'
+        });
+      });
+    }
+    // 数据库里有了该类型，不可以再添加
+    else {
+      res.json({
+        errorCode: -1,
+        data: '已有该类型'
+      });
+    }
+  });
+});
+
 /*********************************************************************/
 
 

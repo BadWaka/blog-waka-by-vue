@@ -132,7 +132,8 @@ blogWakaRouter.post('/admin/article/new', function (req, res) {
       }
       res.json({
         errorCode: 0,
-        data: '添加成功'
+        data: '添加成功',
+        articleId: article._id
       });
     });
   } else {
@@ -144,7 +145,8 @@ blogWakaRouter.post('/admin/article/new', function (req, res) {
       }
       res.json({
         errorCode: 1,
-        data: '更新成功'
+        data: '更新成功',
+        articleId: article._id
       });
     });
   }
