@@ -85,10 +85,6 @@
     align-items: center;
   }
 
-  .app-bar {
-    background-color: $blue500;
-  }
-
   .article {
     width: 90%;
     margin: 48px;

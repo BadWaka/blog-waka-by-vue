@@ -159,16 +159,11 @@
     align-items: center;
     width: 100%;
     color: #fff;
-    background-color: $blue500;
     z-index: 999;
   }
 
   .drawer {
     z-index: 9999;
-  }
-
-  .drawer-header {
-    background-color: $blue500;
   }
 
   header {
@@ -177,16 +172,16 @@
     align-items: center;
     height: 360px;
     color: #fff;
-    background-color: $blue500;
+    background-color: $color-primary;
 
     .avatar {
       height: 150px;
       width: 150px;
       margin-top: 100px;
-      background: url(http://img.hb.aicdn.com/19dd42725e125bb7424785afbddeee41d5eb13931b097-evWO7z_fw658) center no-repeat;
+      background: url(http://upload.jianshu.io/users/upload_avatars/1828354/ffda24139fb9.png?imageMogr/thumbnail/120x120/quality/100) center no-repeat;
       background-size: cover;
       border-radius: 50%;
-      box-shadow: 5px 10px 10px $blue800;
+      box-shadow: 5px 10px 10px $blue500;
     }
 
     .welcome {

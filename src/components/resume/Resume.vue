@@ -165,13 +165,13 @@
   }
 
   .h-blue {
-    color: $blue500;
+    color: $color-primary;
     width: 100%;
     font-size: 24px;
     padding-bottom: 8px;
     margin-bottom: 8px;
     margin-top: 36px;
-    border-bottom: 1px solid $blue500;
+    border-bottom: 1px solid $color-primary;
   }
 
   a {
@@ -187,7 +187,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: $blue500;
+    background-color: $color-primary;
     color: #fff;
 
     #header {
@@ -202,7 +202,7 @@
         background: url(http://img.hb.aicdn.com/19dd42725e125bb7424785afbddeee41d5eb13931b097-evWO7z_fw658) center no-repeat;
         background-size: cover;
         border-radius: 50%;
-        box-shadow: 5px 10px 10px $blue800;
+        box-shadow: 5px 10px 10px $blue500;
       }
 
       .job {
