@@ -74,7 +74,7 @@ blogWakaRouter.get('/articles', function (req, res) {
 });
 
 // 根据类型请求文章
-blogWakaRouter.get('/articles/:typeId', function (req, res) {
+blogWakaRouter.get('/articleList/:typeId', function (req, res) {
   let typeId = req.params.typeId;
   console.log('typeId = ' + typeId);
 

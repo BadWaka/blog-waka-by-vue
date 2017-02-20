@@ -53,11 +53,9 @@
 
 <script>
 
-  // 引入ArticleItem组件；这里可以直接使用components而不需要../../components
-  // 是因为在build/webpack.base.conf.js中alias字段里定义了别名
-  import ArticleItem from 'components/index/article-item/ArticleItem.vue';
-
+  import ArticleItem from '../../components/article-list/article-item/ArticleItem.vue';
   import router from '../../router';
+  import constant from '../../common/js/constant';
 
   export default {
     // 包含的组件
@@ -98,14 +96,7 @@
       // 打开文章列表根据类型
       openArticlesByType (type) {
         console.log(type);
-        // 请求文章列表数据
-        this.$http.get('/blogWaka/articles/' + type._id).then(response => {  // 请求成功
-          console.log('请求成功 response = ');
-          console.log(response);
-        }, response => {  // 请求失败，因为mock数据没有请求失败，所以暂时没有处理
-          console.log('请求失败 response = ');
-          console.log(response);
-        });
+        router.push('/blogWaka/articleList/' + type._id);
       },
       // 获得所有文章
       getArticles () {
@@ -131,6 +122,7 @@
           console.log(response);
           if (response.body.errorCode === 0) {
             this.types = response.body.data;
+            localStorage.setItem(constant.types, JSON.stringify(this.types)); // 把类型数据写到localStorage中
           }
         }, response => {
           // 请求失败
