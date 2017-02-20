@@ -19,7 +19,7 @@
         <mu-text-field label="*内容" labelFloat multiLine :rows="10" :rowsMax="30" fullWidth
                        v-model="article.content"/>
         <mu-raised-button class="bg-color-primary btn" label="添加" primary @click="formValidate"/>
-        <mu-raised-button class="bg-color-primary btn" label="添加假数据" primary @click="addMockData"/>
+        <!--<mu-raised-button class="bg-color-primary btn" label="添加假数据" primary @click="addMockData"/>-->
       </form>
     </mu-paper>
 
