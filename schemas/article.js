@@ -56,11 +56,11 @@ ArticleSchema.statics = {
       .exec(cb);
   },
 
-  // 根据类型名称，查询
-  findByTypeName: function (typeName, cb) {
+  // 根据类型id，查询
+  findByTypeId: function (typeId, cb) {
     return this
       .find({
-        typeName: typeName
+        typeId: typeId
       })
       .exec(cb);
   }

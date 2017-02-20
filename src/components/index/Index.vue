@@ -21,7 +21,7 @@
       <mu-appbar class="drawer-header" title="类别"/>
       <mu-list>
         <!--类别List-->
-        <mu-list-item v-for="type in types" :title="type.typeName"/>
+        <mu-list-item v-for="type in types" :title="type.typeName" @click="openArticlesByType(type)"/>
         <!--关闭栏-->
         <mu-list-item @click="drawerToggle" title="关闭"/>
       </mu-list>
@@ -94,6 +94,18 @@
       // 跳转到控制台
       settings () {
         router.push('/blogWaka/admin/addArticle');
+      },
+      // 打开文章列表根据类型
+      openArticlesByType (type) {
+        console.log(type);
+        // 请求文章列表数据
+        this.$http.get('/blogWaka/articles/' + type._id).then(response => {  // 请求成功
+          console.log('请求成功 response = ');
+          console.log(response);
+        }, response => {  // 请求失败，因为mock数据没有请求失败，所以暂时没有处理
+          console.log('请求失败 response = ');
+          console.log(response);
+        });
       },
       // 获得所有文章
       getArticles () {
