@@ -27,6 +27,7 @@
 <script>
 
   import constant from '../../common/js/constant';  // 引入常量js
+  import util from '../../common/js/util';  // 引入util
   import ArticleItem from '../../components/article-list/article-item/ArticleItem.vue'; // 引入文章项
 
   export default {
@@ -53,13 +54,17 @@
       const that = this;
       this.typeId = this.$route.params.typeId; // 从vue-router的路由拿到路由传过来的id
       console.log('typeId = ' + this.typeId);
-      this.types = JSON.parse(localStorage.getItem(constant.types));  // 从localStorage中取出数据
-      this.types.forEach(function (type) {
-        console.log(type);
-        if (type._id === that.typeId) {
-          that.typeName = type.typeName;
-        }
-      });
+      try {
+        this.types = JSON.parse(localStorage.getItem(constant.types));  // 从localStorage中取出数据
+        this.types.forEach(function (type) {
+          console.log(type);
+          if (type._id === that.typeId) {
+            that.typeName = type.typeName;
+          }
+        });
+      } catch (e) {
+        console.log(e);
+      }
       // 请求文章列表数据
       this.$http.get('/blogWaka/articleList/' + this.typeId).then(response => {  // 请求成功
         console.log('请求成功 response = ');

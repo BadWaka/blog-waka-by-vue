@@ -10,7 +10,8 @@
       <div class="intro">简介：{{article.intro}}</div>
       <!--额外信息-->
       <div class="extra">
-        <mu-raised-button :label="article.typeName" class="lower-case"/>
+        <!--类型名-->
+        <mu-raised-button :label="article.typeName" class="lower-case" @click="btnType"/>
       </div>
     </mu-paper>
   </section>
@@ -35,8 +36,16 @@
     methods: {
       // 跳转到文章详情页
       articleDetail () {
-        console.log('articleDetail');
+        console.log('跳转到文章详情页 articleDetail');
         router.push('/blogWaka/articleDetail/' + this.article._id);
+      },
+      // 点击类型按钮
+      btnType (e) {
+        console.log('点击类型按钮 btnType');
+        e.stopPropagation();  // 阻止事件冒泡
+        e.cancelBubble = true;  // IE，阻止事件冒泡
+        let typeId = this.article.typeId;
+        router.push('/blogWaka/articleList/' + typeId);
       }
     }
   };

@@ -30,6 +30,7 @@ module.exports = {
     // 允许定义变量而不用它
     'no-unused-vars': 0,
     'padded-blocks': 0,
-    'no-useless-escape': 0
+    'no-useless-escape': 0,
+    'space-before-function-paren': 0
   }
 };
