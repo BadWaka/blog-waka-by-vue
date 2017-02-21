@@ -90,18 +90,18 @@ blogWakaRouter.get('/articleDetail/:id', function (req, res) {
 });
 
 // 根据类型请求文章
-blogWakaRouter.get('/articles/:typeName', function () {
-  let typeName = req.params.typeName;
-  console.log('typeName = ' + typeName);
+blogWakaRouter.get('/articleList/:typeId', function (req, res) {
+  let typeId = req.params.typeId;
+  console.log('typeId = ' + typeId);
 
-  Article.findByTypeName(id, function (err, article) {
+  Article.findByTypeId(typeId, function (err, articles) {
     if (err) {
       handleError(err);
       return;
     }
     res.json({
       errorCode: 0,
-      data: article
+      data: articles
     });
   });
 });
