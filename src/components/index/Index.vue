@@ -32,7 +32,7 @@
       <!--头像-->
       <div class="avatar"></div>
       <!--提示语 暂时写死，以后会从服务器取得-->
-      <div class="welcome">Welcome to waka's blog</div>
+      <div class="welcome">"好记性不如烂笔头。"</div>
     </header>
 
     <!--文章列表-->

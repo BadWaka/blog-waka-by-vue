@@ -7,11 +7,12 @@
       <!--标题-->
       <div class="title">{{article.title}}</div>
       <!--简介-->
-      <div class="intro">简介：{{article.intro}}</div>
+      <div v-if="article.intro" class="intro">简介：{{article.intro}}</div>
       <!--额外信息-->
       <div class="extra">
         <!--类型名-->
         <mu-raised-button :label="article.typeName" class="lower-case" @click="btnType"/>
+        <span class="updateAt">{{article.updateAt}}</span>
       </div>
     </mu-paper>
   </section>
@@ -29,9 +30,10 @@
       }
     },
     data () {
-      return {
-        article: this.article   // 这里要加这个，因为不加的话，html里使用article会报错
-      }
+      return {}
+    },
+    created () {
+      this.timeFormat();
     },
     methods: {
       // 跳转到文章详情页
@@ -45,7 +47,15 @@
         e.stopPropagation();  // 阻止事件冒泡
         e.cancelBubble = true;  // IE，阻止事件冒泡
         let typeId = this.article.typeId;
-        router.push('/blogWaka/articleList/' + typeId);
+        router.push('/blogWaka/articleList/' + typeId); // 跳转到文章列表
+      },
+      // 时间格式化
+      timeFormat () {
+        let updateAt = this.article.meta.updateAt;
+        updateAt = new Date(updateAt);
+        updateAt = updateAt.toLocaleString();
+        console.log(updateAt);
+        this.article.updateAt = updateAt;
       }
     }
   };
@@ -78,6 +88,11 @@
 
       .extra {
         display: flex;
+        align-items: center;
+
+        .updateAt {
+          margin-left: 24px;
+        }
       }
 
     }
