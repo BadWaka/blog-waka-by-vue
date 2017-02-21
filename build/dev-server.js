@@ -15,6 +15,7 @@ let bodyParser = require('body-parser');  // 引入body-parser解析请求过来
 let mongoose = require('mongoose'); // 引入mongoose连接数据库
 let Article = require('../models/article');  // 引入Article Model
 let Type = require('../models/type');  // 引入Type Model
+let info = require('../info.json'); // 引入info.json
 
 let webpack = require('webpack');
 let proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
@@ -35,6 +36,7 @@ let compiler = webpack(webpackConfig);
 
 
 /*********************************************************************/
+
 // TODO 服务
 
 // 连接数据库
@@ -208,6 +210,42 @@ blogWakaRouter.post('/admin/type/new', function (req, res) {
         data: '已有该类型'
       });
     }
+  });
+});
+
+/*-----------------------------登录相关----------------------------*/
+
+blogWakaRouter.post('/login', function (req, res) {
+  console.log(req.body);
+
+  let username = req.body.username;
+  let password = req.body.password;
+  console.log('username = ' + username);
+  console.log('password = ' + password);
+
+  if (username !== info.administratorUsername) {
+    console.log('用户名错误 username = ' + username);
+    res.json({
+      errorCode: 1,
+      data: '用户名或密码错误'
+    });
+    return;
+  }
+
+  if (password !== info.administratorPassword) {
+    console.log('密码错误 password = ' + password);
+    res.json({
+      errorCode: 1,
+      data: '用户名或密码错误'
+    });
+    return;
+  }
+
+  let accessToken = 'demaxiyaisthebestplace';
+
+  res.json({
+    errorCode: 0,
+    data: accessToken
   });
 });
 

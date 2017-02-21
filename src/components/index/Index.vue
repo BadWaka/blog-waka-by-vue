@@ -9,10 +9,17 @@
         <i class="material-icons">list</i>
       </mu-icon-button>
       <!--右侧GitHub链接-->
-      <mu-icon-button @click="settings">
-        <i class="material-icons">settings</i>
-        <!--<i class="iconfont icon-github"></i>-->
-      </mu-icon-button>
+      <div>
+        <mu-icon-button v-if="isAccessToken" @click="exitToApp">
+          <i class="material-icons">exit_to_app</i>
+          <!--<i class="iconfont icon-github"></i>-->
+        </mu-icon-button>
+        <mu-icon-button @click="settings">
+          <i class="material-icons">settings</i>
+          <!--<i class="iconfont icon-github"></i>-->
+        </mu-icon-button>
+      </div>
+
     </div>
 
     <!--点击抽屉开关打开的侧边菜单-->
@@ -31,8 +38,23 @@
     <header>
       <!--头像-->
       <div class="avatar"></div>
+      <section class="links">
+        <mu-icon-button href="https://github.com/badwaka">
+          <i class="iconfont icon-github"></i>
+        </mu-icon-button>
+        <mu-icon-button href="http://www.jianshu.com/u/d184d3ab9060">
+          <i class="iconfont icon-jian"></i>
+        </mu-icon-button>
+        <mu-icon-button href="http://blog.csdn.net/u011326979">
+          <i class="iconfont icon-csdn"></i>
+        </mu-icon-button>
+        <mu-icon-button href="http://weibo.com/u/2941492715?refer_flag=1001030201_&is_hot=1">
+          <i class="iconfont icon-unie61d"></i>
+        </mu-icon-button>
+      </section>
       <!--提示语 暂时写死，以后会从服务器取得-->
       <div class="welcome">"好记性不如烂笔头。"</div>
+      <div class="subtitle">——欢迎来到waka的博客</div>
     </header>
 
     <!--文章列表-->
@@ -47,6 +69,12 @@
       <mu-pagination :total="total" :current="current" @pageChange="paginationClick"
                      :pageSize="pageSize"></mu-pagination>
     </section>
+
+    <!--确认对话框-->
+    <mu-dialog :open="dialogToggle" title="确认退出登录吗？" @close="closeDialog">
+      <mu-flat-button slot="actions" @click="closeDialog" primary label="取消"/>
+      <mu-flat-button slot="actions" primary @click="btnConfirm" label="确定"/>
+    </mu-dialog>
 
   </section>
 </template>
@@ -65,6 +93,8 @@
     // 数据
     data () {
       return {
+        dialogToggle: false,
+        isAccessToken: false,  // 是否有accessToken
         current: 1, // 当前页数，Muse-UI默认是从1开始算的
         total: 1,  // 数据总数，默认写0的话 Muse-UI会出现一些问题
         pageSize: 10,  // 每页数据条数，默认每页10条
@@ -76,6 +106,7 @@
     },
     // 实例创建后被调用；生命周期钩子
     created () {
+      this.getAccessToken();
       this.getArticles();
       this.getTypes();
     },
@@ -91,7 +122,36 @@
       },
       // 跳转到控制台
       settings () {
-        router.push('/blogWaka/admin/addArticle');
+        if (localStorage[constant.accessToken]) {
+          router.push('/blogWaka/admin/addArticle');
+        } else {
+          router.push('/blogWaka/login');
+        }
+      },
+      // 获得accessToken
+      getAccessToken () {
+        let accessToken = localStorage[constant.accessToken];
+        if (accessToken) {
+          this.isAccessToken = true;
+        }
+      },
+      // 退出app
+      exitToApp () {
+        this.openDialog();
+      },
+      // 打开对话框
+      openDialog () {
+        this.dialogToggle = true;
+      },
+      // 关闭对话框
+      closeDialog () {
+        this.dialogToggle = false;
+      },
+      // 点击确定
+      btnConfirm () {
+        localStorage[constant.accessToken] = '';
+        this.isAccessToken = false;
+        this.closeDialog();
       },
       // 打开文章列表根据类型
       openArticlesByType (type) {
@@ -175,7 +235,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 360px;
+    height: 480px;
     color: #fff;
     background-color: $color-primary;
 
@@ -183,16 +243,27 @@
       height: 150px;
       width: 150px;
       margin-top: 100px;
-      background: url(http://upload.jianshu.io/users/upload_avatars/1828354/ffda24139fb9.png?imageMogr/thumbnail/120x120/quality/100) center no-repeat;
+      background: url(http://upload.jianshu.io/users/upload_avatars/1828354/4e8d0f92-0624-4aa9-a95b-30238f53eaf4.png?imageMogr/thumbnail/120x120/quality/100) center no-repeat;
       background-size: cover;
       border-radius: 50%;
-      box-shadow: 5px 10px 10px $blue500;
+      box-shadow: 5px 10px 10px $blue800;
     }
 
     .welcome {
       margin-top: 20px;
-      font-size: 24px;
+      font-size: 36px;
       font-family: "Comic Sans MS";
+    }
+
+    .subtitle {
+      margin-top: 20px;
+      width: 500px;
+      font-size: 24px;
+      text-align: end;
+    }
+
+    .links {
+      margin-top: 8px;
     }
   }
 
