@@ -33,10 +33,11 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 1. marked `#标题`不识别，必须是`# 标题`才可以
 2. vue-router跳转时记录滚动条位置，参考vue-router官网文档无效
 
-
 # 待实现的功能
-1. 点击分类跳转到相应分类列表
-2. 管理员权限的实现
+1. 点击分类跳转到相应分类列表（已实现）
+2. 管理员权限的实现（已实现）
+3. 更新文章功能，删除文章功能
+4. MongoDB实现数据库加密
 
 # 待解决的bug
 1. 回退到主页时记住滚动条的位置
