@@ -163,6 +163,7 @@
     align-items: center;
     width: 100%;
     color: #fff;
+    background-color: $color-primary;
     z-index: 999;
   }
 

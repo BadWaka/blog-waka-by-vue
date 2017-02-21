@@ -1,7 +1,7 @@
 <template>
   <section class="page">
     <!--app bar-->
-    <mu-appbar class="bg-color-primary" title="添加文章">
+    <mu-appbar title="添加文章">
       <mu-icon-button icon='arrow_back' slot="left" @click="back"/>
     </mu-appbar>
 
@@ -18,7 +18,7 @@
         <mu-text-field label="图片地址" labelFloat fullWidth v-model="article.img"/>
         <mu-text-field label="*内容" labelFloat multiLine :rows="10" :rowsMax="30" fullWidth
                        v-model="article.content"/>
-        <mu-raised-button class="bg-color-primary btn" label="添加" primary @click="btnAddArticle"/>
+        <mu-raised-button class="btn" label="添加" primary @click="btnAddArticle"/>
       </form>
     </mu-paper>
 
