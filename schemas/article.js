@@ -43,7 +43,7 @@ ArticleSchema.statics = {
   fetch: function (cb) {
     return this
       .find()
-      .sort('meta.updateAt')  // 排序;根据更新时间排序
+      .sort('-meta.updateAt')  // 排序;根据更新时间排序；前面加-号表示降序
       .exec(cb);
   },
 
@@ -62,6 +62,7 @@ ArticleSchema.statics = {
       .find({
         typeId: typeId
       })
+      .sort('-meta.updateAt')  // 排序;根据更新时间排序；前面加-号表示降序
       .exec(cb);
   }
 };

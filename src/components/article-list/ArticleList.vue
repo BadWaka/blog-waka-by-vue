@@ -30,6 +30,10 @@
   import ArticleItem from '../../components/article-list/article-item/ArticleItem.vue'; // 引入文章项
 
   export default {
+    // 包含的组件
+    components: {
+      ArticleItem
+    },
     data () {
       return {
         typeId: '',
@@ -83,6 +87,7 @@
   /*文章列表*/
   .articles {
     margin-top: 48px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
