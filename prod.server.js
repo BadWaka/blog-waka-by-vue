@@ -10,6 +10,7 @@ const Article = require('./models/article');  // 引入Article Model
 const Type = require('./models/type');  // 引入Type Model
 const router = express.Router();
 const blogWakaRouter = express.Router(); // 定义Express的路由，并编写接口
+const info = require('./info.json'); // 引入info.json
 
 // 初始化
 let port = process.env.PORT || config.build.port; // 取当前环境下的端口，如果没有的话就去取config文件里的端口
@@ -207,6 +208,42 @@ blogWakaRouter.post('/admin/type/new', function (req, res) {
         data: '已有该类型'
       });
     }
+  });
+});
+
+/*-----------------------------登录相关----------------------------*/
+
+blogWakaRouter.post('/login', function (req, res) {
+  console.log(req.body);
+
+  let username = req.body.username;
+  let password = req.body.password;
+  console.log('username = ' + username);
+  console.log('password = ' + password);
+
+  if (username !== info.administratorUsername) {
+    console.log('用户名错误 username = ' + username);
+    res.json({
+      errorCode: 1,
+      data: '用户名或密码错误'
+    });
+    return;
+  }
+
+  if (password !== info.administratorPassword) {
+    console.log('密码错误 password = ' + password);
+    res.json({
+      errorCode: 1,
+      data: '用户名或密码错误'
+    });
+    return;
+  }
+
+  let accessToken = 'demaxiyaisthebestplace';
+
+  res.json({
+    errorCode: 0,
+    data: accessToken
   });
 });
 
