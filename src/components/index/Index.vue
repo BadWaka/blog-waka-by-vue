@@ -203,6 +203,7 @@
     align-items: center;
   }
 
+  /*底部分页栏*/
   .pagination-wrapper {
     display: flex;
     justify-content: center;
