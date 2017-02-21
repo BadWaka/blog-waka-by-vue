@@ -195,7 +195,8 @@ blogWakaRouter.post('/admin/type/new', function (req, res) {
         }
         res.json({
           errorCode: 0,
-          data: '添加成功'
+          data: '添加成功',
+          typeId: type._id
         });
       });
     }

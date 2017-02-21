@@ -73,23 +73,6 @@ blogWakaRouter.get('/articles', function (req, res) {
   });
 });
 
-// 根据类型请求文章
-blogWakaRouter.get('/articleList/:typeId', function (req, res) {
-  let typeId = req.params.typeId;
-  console.log('typeId = ' + typeId);
-
-  Article.findByTypeId(typeId, function (err, articles) {
-    if (err) {
-      handleError(err);
-      return;
-    }
-    res.json({
-      errorCode: 0,
-      data: articles
-    });
-  });
-});
-
 // 请求具体的某一篇文章
 blogWakaRouter.get('/articleDetail/:id', function (req, res) {
   let id = req.params.id;
@@ -103,6 +86,23 @@ blogWakaRouter.get('/articleDetail/:id', function (req, res) {
     res.json({
       errorCode: 0,
       data: article
+    });
+  });
+});
+
+// 根据类型请求文章
+blogWakaRouter.get('/articleList/:typeId', function (req, res) {
+  let typeId = req.params.typeId;
+  console.log('typeId = ' + typeId);
+
+  Article.findByTypeId(typeId, function (err, articles) {
+    if (err) {
+      handleError(err);
+      return;
+    }
+    res.json({
+      errorCode: 0,
+      data: articles
     });
   });
 });
