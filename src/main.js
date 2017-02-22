@@ -23,6 +23,7 @@ router.push('/blogWaka/admin/addArticle');
 
 router.push('/blogWaka/login');
 router.push('/blogWaka');
+router.push('/blogWaka/resume');
 
 // router.push('/blogWaka/resume');
 
