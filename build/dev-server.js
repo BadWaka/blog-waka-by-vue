@@ -16,6 +16,8 @@ let mongoose = require('mongoose'); // 引入mongoose连接数据库
 let Article = require('../models/article');  // 引入Article Model
 let Type = require('../models/type');  // 引入Type Model
 let info = require('../info.json'); // 引入info.json
+const history = require('connect-history-api-fallback');  // HTML5 History 模式
+const connect = require('connect'); // HTML5 History 模式
 
 let webpack = require('webpack');
 let proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
@@ -33,6 +35,8 @@ let proxyTable = config.dev.proxyTable;
 
 let app = express();
 let compiler = webpack(webpackConfig);
+
+app.use(history()); // HTML5 History 模式
 
 
 /*********************************************************************/

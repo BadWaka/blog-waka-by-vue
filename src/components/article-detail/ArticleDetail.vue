@@ -59,6 +59,11 @@
     },
     // Vue实例创建之后被调用
     created () {
+
+    },
+    // activated
+    activated: function () {
+      console.log('activated');
       this.articleId = this.$route.params.id; // 从vue-router的路由拿到路由传过来的id
       this.getArticleDetailById();
     },

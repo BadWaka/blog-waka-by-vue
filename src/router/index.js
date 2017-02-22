@@ -13,6 +13,7 @@ import Resume from '../components/resume/Resume.vue';  // 简历页
 
 // 配置路由
 export default new Router({
+  saveScrollPosition: true, // 当用户点击后退按钮时，借助 HTML5 history 中的 popstate 事件对应的 state 来重置页面的滚动位置。注意，当 <router-view> 设定了相应的场景切换效果时，这个可能不会得到预想的效果。
   linkActiveClass: 'active',  // 激活class类名
   mode: 'history',  // 使用路由的history模式
   routes: [
@@ -54,17 +55,11 @@ export default new Router({
     }
   ],
   scrollBehavior (to, from, savedPostion) {
-    // console.log('to = ');
-    // console.log(to);
-    // console.log('from = ');
-    // console.log(from);
-    // console.log('savedPostion = ');
-    // console.log(savedPostion);
-    // if (savedPostion) {
-    //   return savedPostion;
-    // } else {
-    //   return {x: 0, y: 520};
-    // }
+    if (savedPostion) {
+      return savedPostion;
+    } else {
+      return {x: 0, y: 0}
+    }
   }
 });
 

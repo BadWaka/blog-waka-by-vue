@@ -104,9 +104,19 @@
     },
     // 实例创建后被调用；生命周期钩子
     created () {
+      console.log('created');
       this.getAccessToken();
       this.getArticles();
       this.getTypes();
+    },
+    // activated
+    activated: function () {
+      console.log('activated');
+      if (sessionStorage[constant.isNeedRefresh]) {
+        this.getAccessToken();
+        this.getArticles();
+        this.getTypes();
+      }
     },
     // 方法
     methods: {

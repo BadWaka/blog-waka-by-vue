@@ -73,6 +73,11 @@
       }
     },
     created () {
+
+    },
+    // activated
+    activated: function () {
+      console.log('activated');
       this.getLocalArticleData();
       this.newType = this.article.typeName; // 把传过来的类名赋值给newType
       this.getTypes(true);  // 调用getTypes方法，并传入true，让类型自动更新成传过来的type
@@ -251,13 +256,16 @@
       },
       // 返回
       btnGoBack () {
+        sessionStorage[constant.isNeedRefresh] = true;
         history.go(-2);
+        this.closeAddArticleSuccessDialog();
       },
       // 查看文章
       btnViewArticle () {
         console.log('查看文章 btnViewArticle');
         const articleId = this.newArticleId;  // 拿到文章id
         router.push('/blogWaka/articleDetail/' + articleId);  // 跳转到文章详情页
+        this.closeAddArticleSuccessDialog();
       }
     }
   };

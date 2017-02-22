@@ -31,6 +31,7 @@ module.exports = {
     'no-unused-vars': 0,
     'padded-blocks': 0,
     'no-useless-escape': 0,
-    'space-before-function-paren': 0
+    'space-before-function-paren': 0,
+    'no-undef': 0
   }
 };

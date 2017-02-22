@@ -35,6 +35,10 @@
     created () {
       this.timeFormat();
     },
+    // activated
+    activated: function () {
+      console.log('activated');
+    },
     methods: {
       // 跳转到文章详情页
       articleDetail () {
