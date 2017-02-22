@@ -5,8 +5,9 @@
     <div class="left">
 
       <section id="header">
-        <div class="avatar"></div>
+        <!--<div class="avatar"></div>-->
         <!--<div class="job">{{job}}</div>-->
+        <div class="job">{{resume.job}}</div>
         <div class="name">{{resume.name}}</div>
       </section>
 
@@ -18,7 +19,10 @@
         <div class="school">学校：{{resume.baseInfo.school}}</div>
         <div class="major">专业：{{resume.baseInfo.major}}</div>
         <div class="graduateDate">毕业年份：{{resume.baseInfo.graduateDate}}</div>
-        <div class="blogAddress">个人博客：<a :href="resume.baseInfo.blogAddress">{{resume.baseInfo.blogAddress}}</a></div>
+        <div class="blogAddress">个人博客：<a target="_blank" :href="resume.baseInfo.blogAddress">{{resume.baseInfo.blogAddress}}</a>
+        </div>
+        <div class="blogAddress">GitHub：<a target="_blank" :href="resume.baseInfo.GitHub">{{resume.baseInfo.GitHub}}</a>
+        </div>
       </section>
 
       <h2 class="h-white">职业技能</h2>
@@ -97,7 +101,8 @@
             school: '华北电力大学(北京)',
             major: '软件工程',
             graduateDate: '2016年6月',
-            blogAddress: 'http://www.badwaka.cn'
+            blogAddress: 'http://www.badwaka.cn',
+            GitHub: 'https://github.com/badwaka'
           },
           // 工作经验
           workExperiences: [{
@@ -253,7 +258,7 @@
     font-size: 24px;
     padding-bottom: 8px;
     margin-bottom: 8px;
-    margin-top: 36px;
+    margin-top: 24px;
     border-bottom: 1px solid $color-primary;
   }
 
@@ -290,7 +295,7 @@
 
       .job {
         margin-top: 36px;
-        font-size: 32px;
+        font-size: 42px;
       }
 
       .name {
@@ -329,7 +334,7 @@
   }
 
   .right {
-    width: 60%;
+    width: 70%;
     padding: 0 36px;
 
     .works {
