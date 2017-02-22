@@ -54,7 +54,6 @@
         let updateAt = this.article.meta.updateAt;
         updateAt = new Date(updateAt);
         updateAt = updateAt.toLocaleString();
-        console.log(updateAt);
         this.article.updateAt = updateAt;
       }
     }

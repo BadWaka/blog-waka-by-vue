@@ -12,11 +12,9 @@
       <div>
         <mu-icon-button v-if="isAccessToken" @click="exitToApp">
           <i class="material-icons">exit_to_app</i>
-          <!--<i class="iconfont icon-github"></i>-->
         </mu-icon-button>
         <mu-icon-button @click="settings">
           <i class="material-icons">settings</i>
-          <!--<i class="iconfont icon-github"></i>-->
         </mu-icon-button>
       </div>
 
@@ -214,7 +212,7 @@
   @import "../../common/css/color.scss";
 
   .top {
-    height: 64px;
+    height: 56px;
     padding-left: 8px;
     padding-right: 8px;
     display: flex;

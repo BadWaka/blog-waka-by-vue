@@ -6,11 +6,8 @@
       <mu-icon-button icon="arrow_back" slot="left" @click="back"/>
       <!--右侧菜单-->
       <mu-icon-menu icon="more_vert" slot="right">
-        <mu-menu-item title="菜单 1"/>
-        <mu-menu-item title="菜单 2"/>
-        <mu-menu-item title="菜单 3"/>
-        <mu-menu-item title="菜单 4"/>
-        <mu-menu-item title="菜单 5"/>
+        <mu-menu-item title="编辑" @click="edit"/>
+        <mu-menu-item title="分享"/>
       </mu-icon-menu>
     </mu-appbar>
 
@@ -29,9 +26,9 @@
   // highlight.js模块的版本是9.9.0
   // highlightjs模块的版本是9.8.0
   import highlightjs from 'highlightjs';
-
-  // 引入marked，用来将Markdown转换成HTML
-  import marked from 'marked';
+  import router from '../../router';
+  import constant from '../../common/js/constant';
+  import marked from 'marked';  // 引入marked，用来将Markdown转换成HTML
   // 配置marked
   marked.setOptions({
     // 配置高亮
@@ -46,30 +43,42 @@
         article: {}
       }
     },
+    // Vue实例创建之后被调用
+    created () {
+      this.articleId = this.$route.params.id; // 从vue-router的路由拿到路由传过来的id
+      this.getArticleDetailById();
+    },
     methods: {
       // 后退
       back () {
         window.history.back();
+      },
+      // 跳转到编辑页
+      edit () {
+        console.log('跳转到编辑页 edit');
+        if (localStorage[constant.accessToken]) {
+          router.push('/blogWaka/admin/addArticle');
+          localStorage[constant.articleDetail] = JSON.stringify(this.article);  // 把文章详情保存到localStorage中，用来在添加文章的页面展示已填写的数据
+        } else {
+          router.push('/blogWaka/login');
+        }
+      },
+      // 根据id获取文章详情
+      getArticleDetailById () {
+        // 请求文章详情，要带上文章id
+        this.$http.get('/blogWaka/articleDetail/' + this.articleId).then(response => {
+          console.log(response);
+          // 拿到数据
+          this.article = response.body.data;
+          let mdData = this.article.content;  // 拿到md格式内容数据
+          // 因为简书里的#后接文字是可以被识别的，但是marked必须# 后接文字才可以被识别
+          // 这里我想做一个需求，"###标题" 改为 "### 标题",但是我不知道怎么做
+          mdData = mdData.replace(/#+/g, '# ');
+          this.article.articleContentHTML = marked(mdData);    // html格式数据
+        }, response => {  // 请求失败
+          console.log(response);
+        });
       }
-    },
-    // Vue实例创建之后被调用
-    created () {
-      // 从vue-router的路由拿到路由传过来的id
-      const id = this.$route.params.id;
-      console.log('id = ' + id);
-      // 请求文章详情，要带上文章id
-      this.$http.get('/blogWaka/articleDetail/' + id).then(response => {
-        console.log(response);
-        // 拿到数据
-        this.article = response.body.data;
-        let mdData = this.article.content;  // 拿到md格式内容数据
-        // 因为简书里的#后接文字是可以被识别的，但是marked必须# 后接文字才可以被识别
-        // 这里我想做一个需求，"###标题" 改为 "### 标题",但是我不知道怎么做
-        mdData = mdData.replace(/#+/g, '# ');
-        this.article.articleContentHTML = marked(mdData);    // html格式数据
-      }, response => {  // 请求失败
-        console.log(response);
-      });
     }
   };
 </script>

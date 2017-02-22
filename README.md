@@ -38,6 +38,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 2. 管理员权限的实现（已实现）
 3. 更新文章功能，删除文章功能
 4. MongoDB实现数据库加密
+5. 实现后退不刷新页面
 
 # 待解决的bug
 1. 回退到主页时记住滚动条的位置
