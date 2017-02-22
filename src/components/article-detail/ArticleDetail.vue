@@ -7,7 +7,7 @@
       <!--右侧菜单-->
       <mu-icon-menu icon="more_vert" slot="right">
         <mu-menu-item title="编辑" @click="edit"/>
-        <mu-menu-item title="分享"/>
+        <mu-menu-item title="删除" @click="deleteArticle"/>
       </mu-icon-menu>
     </mu-appbar>
 
@@ -16,6 +16,16 @@
       <!--使用v-html输出纯HTML-->
       <div class="markdown" v-html="article.articleContentHTML"></div>
     </mu-paper>
+
+    <!--确认对话框-->
+    <mu-dialog :open="dialogToggle" title="确认要删除该文章吗？" @close="closeDialog">
+      <mu-flat-button slot="actions" @click="closeDialog" primary label="取消"/>
+      <mu-flat-button slot="actions" primary @click="btnConfirm" label="确定"/>
+    </mu-dialog>
+
+    <!--提示框-->
+    <mu-snackbar v-if="snackbar" :message="snackbarMsg" action="关闭" @actionClick="hideSnackbar" @close="hideSnackbar"/>
+
   </section>
 </template>
 
@@ -40,7 +50,11 @@
   export default {
     data () {
       return {
-        article: {}
+        // snackbar
+        snackbar: false,  // snackbar开关
+        snackbarMsg: '',  // snackbar提示语
+        article: {},
+        dialogToggle: false
       }
     },
     // Vue实例创建之后被调用
@@ -53,6 +67,31 @@
       back () {
         window.history.back();
       },
+      // 显示错误提示
+      showSnackbar () {
+        this.snackbar = true;
+        if (this.snackTimer) {
+          clearTimeout(this.snackTimer);
+        }
+        this.snackTimer = setTimeout(() => {
+          this.snackbar = false;
+        }, 2000);
+      },
+      // 隐藏错误提示
+      hideSnackbar () {
+        this.snackbar = false;
+        if (this.snackTimer) {
+          clearTimeout(this.snackTimer);
+        }
+      },
+      // 打开对话框
+      openDialog () {
+        this.dialogToggle = true;
+      },
+      // 关闭对话框
+      closeDialog () {
+        this.dialogToggle = false;
+      },
       // 跳转到编辑页
       edit () {
         console.log('跳转到编辑页 edit');
@@ -62,6 +101,38 @@
         } else {
           router.push('/blogWaka/login');
         }
+      },
+      // 删除文章
+      deleteArticle () {
+        console.log('删除文章 deleteArticle');
+        if (localStorage[constant.accessToken]) {
+          this.openDialog();
+        } else {
+          router.push('/blogWaka/login');
+        }
+      },
+      // 点击确定
+      btnConfirm () {
+        const that = this;
+        // 删除文章接口
+        this.$http.post('/blogWaka/admin/deleteArticle', {
+          articleId: that.article._id
+        }).then(response => {
+          console.log('请求成功 response = ');
+          console.log(response);
+          if (response.body.errorCode === 0) {
+            // 删除成功
+            setTimeout(function () {
+              window.history.back();
+            }, 1000);
+          }
+          this.snackbarMsg = response.body.data;
+          this.showSnackbar();
+          this.closeDialog();
+        }, response => {
+          console.log('请求失败 response = ');
+          console.log(response);
+        });
       },
       // 根据id获取文章详情
       getArticleDetailById () {

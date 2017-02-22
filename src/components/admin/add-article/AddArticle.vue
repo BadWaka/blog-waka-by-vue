@@ -33,7 +33,8 @@
     <!--添加新文章成功对话框-->
     <mu-dialog :open="addArticleSuccessDialogToggle" :title="addArticleSuccessDialogTitle"
                @close="closeAddArticleSuccessDialog">
-      <mu-flat-button slot="actions" primary @click="btnContinueAdd" label="继续添加"/>
+      <mu-flat-button v-if="dialogType==='add'" slot="actions" primary @click="btnContinueAdd" label="继续添加"/>
+      <mu-flat-button v-if="dialogType==='update'" slot="actions" primary @click="btnGoBack" label="返回"/>
       <mu-flat-button slot="actions" primary @click="btnViewArticle" label="查看文章"/>
     </mu-dialog>
   </section>
@@ -42,6 +43,7 @@
 <script>
 
   import router from '../../../router';
+  import constant from '../../../common/js/constant';
 
   export default {
     data () {
@@ -53,6 +55,7 @@
         snackbar: false,  // snackbar开关
         snackbarMsg: '',  // snackbar提示语
         // dialog
+        dialogType: 'add',
         addTypeDialogToggle: false, // 添加新类型对话框，开关
         addArticleSuccessDialogToggle: false,  // 添加新文章成功对话框，开关
         addArticleSuccessDialogTitle: '',  // 添加新文章成功对话框，开关
@@ -70,7 +73,9 @@
       }
     },
     created () {
-      this.getTypes();
+      this.getLocalArticleData();
+      this.newType = this.article.typeName; // 把传过来的类名赋值给newType
+      this.getTypes(true);  // 调用getTypes方法，并传入true，让类型自动更新成传过来的type
     },
     methods: {
       // 后退
@@ -107,6 +112,15 @@
       },
       closeAddArticleSuccessDialog () {
         this.addArticleSuccessDialogToggle = false;
+      },
+      // 得到本地的文章数据
+      getLocalArticleData () {
+        let articleDetail = localStorage[constant.articleDetail];
+        if (articleDetail) {
+          articleDetail = JSON.parse(articleDetail);
+          this.article = articleDetail;
+          localStorage[constant.articleDetail] = '';  // 把传过来的值置空，保证不会混乱
+        }
       },
       /**
        * 获得所有类型
@@ -201,6 +215,13 @@
         }).then(response => {
           console.log('请求成功 response = ');
           console.log(response);
+          if (response.body.errorCode === 0) {
+            // 添加成功
+            this.dialogType = 'add';
+          } else if (response.body.errorCode === 1) {
+            // 更新成功
+            this.dialogType = 'update';
+          }
           this.addArticleSuccessDialogTitle = response.body.data;
           this.newArticleId = response.body.articleId;  // 拿到新文章的id
           this.openAddArticleSuccessDialog();
@@ -227,6 +248,10 @@
         this.currentTypeIndex = '';
         // 关闭对话框
         this.closeAddArticleSuccessDialog();
+      },
+      // 返回
+      btnGoBack () {
+        history.go(-2);
       },
       // 查看文章
       btnViewArticle () {

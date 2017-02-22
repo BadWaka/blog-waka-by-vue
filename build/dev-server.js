@@ -111,7 +111,7 @@ blogWakaRouter.get('/articleList/:typeId', function (req, res) {
 
 // admin post article 后台添加文章接口
 blogWakaRouter.post('/admin/article/new', function (req, res) {
-  console.log(req.body);
+  console.log('后台添加文章接口 /admin/article/new body = ' + req.body);
 
   let article = req.body.article;
   let id = article._id;
@@ -140,8 +140,10 @@ blogWakaRouter.post('/admin/article/new', function (req, res) {
       });
     });
   } else {
+    console.log('更新数据');
+    article.meta.updateAt = Date.now();
     // 旧数据更新
-    Article.findOneAndUpdate({_id: id}, function (err, article) {
+    Article.findOneAndUpdate({_id: id}, article, function (err, article) {
       if (err) {
         handleError(err);
         return;
@@ -153,6 +155,23 @@ blogWakaRouter.post('/admin/article/new', function (req, res) {
       });
     });
   }
+});
+
+// 删除文章
+blogWakaRouter.post('/admin/deleteArticle', function (req, res) {
+  let articleId = req.body.articleId;
+  console.log('删除文章 articleId = ' + articleId);
+
+  Article.remove({_id: articleId}, function (err, article) {
+    if (err) {
+      handleError(err);
+      return;
+    }
+    res.json({
+      errorCode: 0,
+      data: '删除成功'
+    });
+  });
 });
 
 /*-----------------------------类型相关----------------------------*/
