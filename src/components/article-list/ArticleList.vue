@@ -54,7 +54,7 @@
       this.getArticlesByTypeId();
     },
     // activated
-    activated: function () {
+    activated () {
       console.log('activated');
       if (sessionStorage[constant.isNeedRefresh]) {
         this.getTypeNameByTypeId();

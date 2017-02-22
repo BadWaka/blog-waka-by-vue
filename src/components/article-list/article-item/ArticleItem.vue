@@ -33,11 +33,13 @@
       return {}
     },
     created () {
+      console.log('item created');
       this.timeFormat();
     },
     // activated
-    activated: function () {
-      console.log('activated');
+    activated () {
+      console.log('item activated');
+
     },
     methods: {
       // 跳转到文章详情页
@@ -56,6 +58,7 @@
       // 时间格式化
       timeFormat () {
         let updateAt = this.article.meta.updateAt;
+        console.log(updateAt);
         updateAt = new Date(updateAt);
         updateAt = updateAt.toLocaleString();
         this.article.updateAt = updateAt;

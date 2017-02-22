@@ -110,7 +110,7 @@
       this.getTypes();
     },
     // activated
-    activated: function () {
+    activated () {
       console.log('activated');
       if (sessionStorage[constant.isNeedRefresh]) {
         this.getAccessToken();

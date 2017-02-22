@@ -76,7 +76,7 @@
 
     },
     // activated
-    activated: function () {
+    activated () {
       console.log('activated');
       this.getLocalArticleData();
       this.newType = this.article.typeName; // 把传过来的类名赋值给newType

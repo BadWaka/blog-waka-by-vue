@@ -62,7 +62,7 @@
 
     },
     // activated
-    activated: function () {
+    activated () {
       console.log('activated');
       this.articleId = this.$route.params.id; // 从vue-router的路由拿到路由传过来的id
       this.getArticleDetailById();
