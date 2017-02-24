@@ -17,7 +17,9 @@
         <div class="phone">电话：{{resume.baseInfo.phone}}</div>
         <div class="email">邮箱：{{resume.baseInfo.email}}</div>
         <div class="school">学校：{{resume.baseInfo.school}}</div>
+        <div class="education">学历：{{resume.baseInfo.education}}</div>
         <div class="major">专业：{{resume.baseInfo.major}}</div>
+        <div class="englishLevel">英语：{{resume.baseInfo.englishLevel}}</div>
         <div class="graduateDate">毕业年份：{{resume.baseInfo.graduateDate}}</div>
         <div class="blogAddress">个人博客：<a target="_blank" :href="resume.baseInfo.blogAddress">{{resume.baseInfo.blogAddress}}</a>
         </div>
@@ -25,12 +27,18 @@
         </div>
       </section>
 
+      <!--<h2 class="h-white">职业技能</h2>-->
+      <!--<section id="vocationalSkill">-->
+      <!--&lt;!&ndash;skill item 使用v-for循环&ndash;&gt;-->
+      <!--<div class="skill-item" v-for="skill in resume.vocationalSkills">-->
+      <!--<div class="name">{{skill.name}}</div>-->
+      <!--<mu-linear-progress class="progress" mode="determinate" :value="skill.score" color="#ec407a"/>-->
+      <!--</div>-->
+      <!--</section>-->
+
       <h2 class="h-white">职业技能</h2>
       <section id="vocationalSkill">
-        <!--skill item 使用v-for循环-->
-        <div class="skill-item" v-for="skill in resume.vocationalSkills">
-          <div class="name">{{skill.name}}</div>
-          <mu-linear-progress class="progress" mode="determinate" :value="skill.score" color="#ec407a"/>
+        <div v-for="vocationalSkill in resume.vocationalSkillsText" class="item"><span class="point"></span>{{vocationalSkill}}
         </div>
       </section>
 
@@ -99,7 +107,9 @@
             phone: '15652912603',
             email: 'waka931124@gmail.com',
             school: '华北电力大学(北京)',
+            education: '本科',
             major: '软件工程',
+            englishLevel: '大学英语四级',
             graduateDate: '2016年6月',
             blogAddress: 'http://www.badwaka.cn',
             GitHub: 'https://github.com/badwaka'
@@ -163,6 +173,16 @@
             '能积极融入团队，有集体责任感，热爱健身，能够承受高压力的工作'
           ],
           // 职业技能
+          vocationalSkillsText: [
+            '掌握HTML、CSS、JS，熟悉ES6',
+            'CSS预处理器方面熟悉Sass，了解stylus，使用过PostCSS',
+            '类库方面掌握jQuery、Vue.js、微信小程序MINA、AppCan.js(类Ionic的Hybrid框架)，熟悉Bootstrap、Backbone.js、React，了解Angular2、React Native',
+            '构建工具方面熟悉webpack，了解Gulp.js；熟悉前端工程化和组件化开发',
+            '有后端开发经历，主要使用Node.js、MongoDB，类库方面熟悉Express，了解koa/koa2；工具方面熟练使用npm，使用过Yarn',
+            '有Android原生开发经历，熟悉Java、Android SDK及Android调试工具使用',
+            '日常开发使用macOS，Webstorm，Android Studio，Git，熟悉linux命令',
+            '英语4级，阅读英文文档基本无障碍'
+          ],
           vocationalSkills: [{
             name: 'HTML',
             score: 80
@@ -211,9 +231,6 @@
           }, {
             name: 'webpack',
             score: 30
-          }, {
-            name: 'Gulp.js',
-            score: 10
           }, {
             name: 'MongoDB',
             score: 40
@@ -272,6 +289,7 @@
 
   .left {
     padding: 36px;
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -294,12 +312,11 @@
       }
 
       .job {
-        margin-top: 36px;
+        margin-top: 24px;
         font-size: 42px;
       }
 
       .name {
-        margin-top: 18px;
         font-size: 32px;
       }
     }
@@ -309,7 +326,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      font-size: 18px;
+      font-size: 14px;
     }
 
     #vocationalSkill {
@@ -329,6 +346,20 @@
           margin-left: 24px;
           width: 200px;
         }
+      }
+
+      .point {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: #fff;
+        border-radius: 50%;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .item {
+        margin-top: 8px;
       }
     }
   }
