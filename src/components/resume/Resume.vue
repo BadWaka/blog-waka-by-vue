@@ -38,7 +38,7 @@
 
       <h2 class="h-white">职业技能</h2>
       <section id="vocationalSkill">
-        <div v-for="vocationalSkill in resume.vocationalSkillsText" class="item"><span class="point"></span>{{vocationalSkill}}
+        <div v-for="vocationalSkill in resume.vocationalSkillsText" class="item">-&nbsp;{{vocationalSkill}}
         </div>
       </section>
 
@@ -56,7 +56,7 @@
           </div>
           <!--项目-->
           <div v-for="(project,index) in workExperience.projects" class="projects">
-            <div class="project-name"><span class="point"></span>{{project.name}}</div>
+            <div class="project-name">-&nbsp;{{project.name}}</div>
             <div class="project-intro" v-html="project.intro"></div>
           </div>
         </div>
@@ -65,7 +65,7 @@
       <h2 class="h-blue">自我评价</h2>
       <section class="self-assessment">
         <div v-for="(assessment,index) in resume.selfAssessments" class="projects">
-          <div class="project-name"><span class="point"></span>
+          <div class="project-name">
             {{assessment}}
           </div>
         </div>
@@ -75,15 +75,15 @@
       <section class="personal-projects">
         <!--项目-->
         <div class="projects">
-          <div class="project-name"><span class="point"></span><a href="https://github.com/BadWaka/blog-waka-by-vue">blog-waka-by-vue：</a>
+          <div class="project-name">-&nbsp;<a href="https://github.com/BadWaka/blog-waka-by-vue">blog-waka-by-vue：</a>
           </div>
           <div class="project-intro">
             个人博客全栈作品。遵循前端工程化和组件化思想，使用Vue2+ES6+MuseUI编写前端代码，使用Sass+PostCSS编写页面样式，使用webpack编译打包，使用Express+MongoDB搭建后台服务，并独立完成linux环境的服务器部署，现已部署至腾讯云。
           </div>
         </div>
         <div v-for="(project,index) in resume.personalProjects" class="projects">
-          <div class="project-name"><span class="point"></span><a target="_blank"
-                                                                  :href="project.link">{{project.name}}：</a>
+          <div class="project-name">-&nbsp;<a target="_blank"
+                                              :href="project.link">{{project.name}}：</a>
             {{project.intro}}
           </div>
         </div>
@@ -160,17 +160,17 @@
           }],
           // 自我评价
           selfAssessments: [
-            '计算机基础扎实，熟练掌握JavaScript，CSS，熟练使用各种布局，使用过ES6',
-            '对解决多浏览器兼容问题，前端性能优化有一定的经验，工作中需要兼容各种型号的手机',
-            '理解前端工程化思想，对构建和持续集成有一定认识，熟悉webpack，了解gulp',
-            '理解组件化开发思想，有一定的设计和抽象能力，熟悉Vue.js',
-            '对后端技术和数据库有一定了解，熟悉Node.js，熟悉MongoDB，熟悉Android内置SQLite',
-            '有移动端开发经验，主要负责公司Hybrid产品的开发和技术支持，有过原生Android开发经验',
-            '对公司主要产品正益工作有过重构经验',
-            '学习能力强，能快速上手新技术，同时也能快速熟悉业务',
-            '关注开源技术，技术视野开阔',
-            '懂得Android原生技术，在移动端适配及原生能力开发调试有优势',
-            '能积极融入团队，有集体责任感，热爱健身，能够承受高压力的工作'
+            '- 计算机基础扎实，掌握JavaScript，CSS，熟练使用各种布局，使用过ES6',
+            '- 对解决多浏览器兼容问题，前端性能优化有一定的经验，工作中需要兼容各种型号的手机',
+            '- 理解前端工程化思想，对构建和持续集成有一定认识，熟悉webpack，了解gulp',
+            '- 理解组件化开发思想，有一定的设计和抽象能力，熟悉Vue.js',
+            '- 对后端技术和数据库有一定了解，熟悉Node.js，熟悉MongoDB，熟悉Android内置SQLite',
+            '- 有移动端开发经验，主要负责公司Hybrid产品的开发和技术支持，有过原生Android开发经验',
+            '- 对公司主要产品正益工作有过重构经验',
+            '- 学习能力强，能快速上手新技术，同时也能快速熟悉业务',
+            '- 关注开源技术，技术视野开阔',
+            '- 懂得Android原生技术，在移动端适配及原生能力开发调试有优势',
+            '- 能积极融入团队，有集体责任感，热爱健身，能够承受高压力的工作'
           ],
           // 职业技能
           vocationalSkillsText: [
@@ -262,7 +262,7 @@
 
   .h-white {
     width: 100%;
-    font-size: 24px;
+    font-size: 12px;
     padding-bottom: 8px;
     margin-bottom: 8px;
     margin-top: 36px;
@@ -272,10 +272,10 @@
   .h-blue {
     color: $color-primary;
     width: 100%;
-    font-size: 24px;
-    padding-bottom: 8px;
-    margin-bottom: 8px;
-    margin-top: 24px;
+    font-size: 12px;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    margin-top: 12px;
     border-bottom: 1px solid $color-primary;
   }
 
@@ -288,8 +288,8 @@
   }
 
   .left {
-    padding: 36px;
-    width: 30%;
+    padding: 18px;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -302,9 +302,9 @@
       align-items: center;
 
       .avatar {
-        margin-top: 36px;
-        height: 150px;
-        width: 150px;
+        margin-top: 18px;
+        height: 75px;
+        width: 75px;
         background: url(http://img.hb.aicdn.com/19dd42725e125bb7424785afbddeee41d5eb13931b097-evWO7z_fw658) center no-repeat;
         background-size: cover;
         border-radius: 50%;
@@ -312,12 +312,12 @@
       }
 
       .job {
-        margin-top: 24px;
-        font-size: 42px;
+        margin-top: 12px;
+        font-size: 21px;
       }
 
       .name {
-        font-size: 32px;
+        font-size: 16px;
       }
     }
 
@@ -326,7 +326,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      font-size: 14px;
+      font-size: 12px;
     }
 
     #vocationalSkill {
@@ -334,7 +334,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      font-size: 14px;
+      font-size: 12px;
 
       .skill-item {
         display: flex;
@@ -343,32 +343,34 @@
         width: 100%;
 
         .progress {
-          margin-left: 24px;
+          margin-left: 12px;
           width: 200px;
         }
       }
 
       .point {
         display: inline-block;
-        width: 6px;
-        height: 6px;
+        width: 3px;
+        height: 3px;
         background: #fff;
         border-radius: 50%;
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
       }
 
       .item {
-        margin-top: 8px;
+        margin-top: 4px;
       }
     }
   }
 
   .right {
     width: 70%;
-    padding: 0 36px;
+    padding-left: 18px;
+    padding-right: 9px;
 
     .works {
+      font-size: 12px;
       .work-item {
         .work-title {
           display: flex;
@@ -377,29 +379,195 @@
       }
     }
 
-    .point {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #000;
-      border-radius: 50%;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-
-    .projects {
-      margin-top: 6px;
+    .self-assessment {
+      font-size: 12px;
       .project-name {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
       }
       .project-intro {
-        padding-top: 6px;
+        padding-top: 3px;
         /*text-indent: 26px;*/
-        padding-left: 26px;
+        /*padding-left: 10px;*/
+      }
+    }
+
+    .point {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      background: #000;
+      border-radius: 50%;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .projects {
+      font-size: 12px;
+      margin-top: 3px;
+      .project-name {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .project-intro {
+        padding-top: 3px;
+        /*text-indent: 26px;*/
+        padding-left: 13px;
       }
     }
 
   }
 </style>
+
+<!--<style lang="scss" rel="stylesheet/scss" scoped>-->
+
+<!--@import "../../common/css/color.scss";-->
+
+<!--.h-white {-->
+<!--width: 100%;-->
+<!--font-size: 24px;-->
+<!--padding-bottom: 8px;-->
+<!--margin-bottom: 8px;-->
+<!--margin-top: 36px;-->
+<!--border-bottom: 1px solid #fff;-->
+<!--}-->
+
+<!--.h-blue {-->
+<!--color: $color-primary;-->
+<!--width: 100%;-->
+<!--font-size: 24px;-->
+<!--padding-bottom: 8px;-->
+<!--margin-bottom: 8px;-->
+<!--margin-top: 24px;-->
+<!--border-bottom: 1px solid $color-primary;-->
+<!--}-->
+
+<!--a {-->
+<!--color: $pink400;-->
+<!--}-->
+
+<!--.page {-->
+<!--display: flex;-->
+<!--}-->
+
+<!--.left {-->
+<!--padding: 36px;-->
+<!--width: 30%;-->
+<!--display: flex;-->
+<!--flex-direction: column;-->
+<!--align-items: center;-->
+<!--background-color: $color-primary;-->
+<!--color: #fff;-->
+
+<!--#header {-->
+<!--display: flex;-->
+<!--flex-direction: column;-->
+<!--align-items: center;-->
+
+<!--.avatar {-->
+<!--margin-top: 36px;-->
+<!--height: 150px;-->
+<!--width: 150px;-->
+<!--background: url(http://img.hb.aicdn.com/19dd42725e125bb7424785afbddeee41d5eb13931b097-evWO7z_fw658) center no-repeat;-->
+<!--background-size: cover;-->
+<!--border-radius: 50%;-->
+<!--box-shadow: 5px 10px 10px $blue500;-->
+<!--}-->
+
+<!--.job {-->
+<!--margin-top: 24px;-->
+<!--font-size: 42px;-->
+<!--}-->
+
+<!--.name {-->
+<!--font-size: 32px;-->
+<!--}-->
+<!--}-->
+
+<!--#baseInfo {-->
+<!--width: 100%;-->
+<!--display: flex;-->
+<!--flex-direction: column;-->
+<!--align-items: flex-start;-->
+<!--font-size: 14px;-->
+<!--}-->
+
+<!--#vocationalSkill {-->
+<!--width: 100%;-->
+<!--display: flex;-->
+<!--flex-direction: column;-->
+<!--justify-content: space-between;-->
+<!--font-size: 14px;-->
+
+<!--.skill-item {-->
+<!--display: flex;-->
+<!--align-items: center;-->
+<!--justify-content: flex-end;-->
+<!--width: 100%;-->
+
+<!--.progress {-->
+<!--margin-left: 24px;-->
+<!--width: 200px;-->
+<!--}-->
+<!--}-->
+
+<!--.point {-->
+<!--display: inline-block;-->
+<!--width: 6px;-->
+<!--height: 6px;-->
+<!--background: #fff;-->
+<!--border-radius: 50%;-->
+<!--margin-left: 10px;-->
+<!--margin-right: 10px;-->
+<!--}-->
+
+<!--.item {-->
+<!--margin-top: 8px;-->
+<!--}-->
+<!--}-->
+<!--}-->
+
+<!--.right {-->
+<!--width: 70%;-->
+<!--padding: 0 36px;-->
+
+<!--.works {-->
+<!--.work-item {-->
+<!--.work-title {-->
+<!--display: flex;-->
+<!--justify-content: space-between;-->
+<!--}-->
+<!--}-->
+<!--}-->
+
+<!--.point {-->
+<!--display: inline-block;-->
+<!--width: 6px;-->
+<!--height: 6px;-->
+<!--background: #000;-->
+<!--border-radius: 50%;-->
+<!--margin-left: 10px;-->
+<!--margin-right: 10px;-->
+<!--}-->
+
+<!--.projects {-->
+<!--margin-top: 6px;-->
+<!--.project-name {-->
+<!--display: flex;-->
+<!--align-items: center;-->
+<!--flex-wrap: wrap;-->
+<!--}-->
+<!--.project-intro {-->
+<!--padding-top: 6px;-->
+<!--/*text-indent: 26px;*/-->
+<!--padding-left: 26px;-->
+<!--}-->
+<!--}-->
+
+<!--}-->
+<!--</style>-->
+
+
+

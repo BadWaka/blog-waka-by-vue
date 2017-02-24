@@ -32,6 +32,7 @@ module.exports = {
     'padded-blocks': 0,
     'no-useless-escape': 0,
     'space-before-function-paren': 0,
-    'no-undef': 0
+    'no-undef': 0,
+    'no-multiple-empty-lines': 0
   }
 };

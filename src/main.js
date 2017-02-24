@@ -24,6 +24,7 @@ router.push('/blogWaka/resume');
 router.push('/blogWaka/login');
 router.push('/blogWaka');
 
+
 // router.push('/blogWaka/resume');
 
 // 在ESLint规定中，如果new了一个新对象，是必须要赋值给某一个变量的，否则会编译报错
