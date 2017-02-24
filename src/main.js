@@ -20,10 +20,9 @@ Vue.use(MuseUI);
 router.push('/blogWaka/articleList');
 router.push('/blogWaka/articleDetail');
 router.push('/blogWaka/admin/addArticle');
-
+router.push('/blogWaka/resume');
 router.push('/blogWaka/login');
 router.push('/blogWaka');
-router.push('/blogWaka/resume');
 
 // router.push('/blogWaka/resume');
 
