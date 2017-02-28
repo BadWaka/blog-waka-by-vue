@@ -251,7 +251,7 @@
       height: 150px;
       width: 150px;
       margin-top: 100px;
-      background: url(http://upload.jianshu.io/users/upload_avatars/1828354/4e8d0f92-0624-4aa9-a95b-30238f53eaf4.png?imageMogr/thumbnail/120x120/quality/100) center no-repeat;
+      background: url(http://upload.jianshu.io/users/upload_avatars/1828354/19678a0c-3d23-4d61-9330-ef451f80a4ba.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/300) center no-repeat;
       background-size: cover;
       border-radius: 50%;
       box-shadow: 5px 10px 10px $blue800;
