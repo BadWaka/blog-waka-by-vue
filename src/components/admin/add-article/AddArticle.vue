@@ -8,10 +8,13 @@
     <!--文章详情-->
     <mu-paper class="article" :zDepth="2">
       <form>
+        <!--文章标题-->
         <mu-text-field label="*标题" labelFloat fullWidth v-model="article.title"/>
+        <!--选择文章类型-->
         <mu-select-field class="type-select" label="*类型" :maxHeight="300" labelFloat v-model="currentTypeIndex">
-          <mu-menu-item v-for="(type,index) in types" :title="type.typeName" :value="index"/>
-          <mu-menu-item title="添加新类型" value="-2" @click="openAddTypeDialog"/>
+          <mu-menu-item title="添加新类型" value="0" @click="openAddTypeDialog"/>
+          <!--这里添加一个index!==0的判断是因为选择器默认是有值的，设默认值为0，这时候第一个类型外面带过来的时候就不显示了，所以增加了一个空的类型放在0的位置，但是不显示它-->
+          <mu-menu-item v-for="(type,index) in types" v-if="index!==0" :title="type.typeName" :value="index"/>
         </mu-select-field>
         <mu-text-field label="简介" labelFloat fullWidth v-model="article.intro"/>
         <mu-text-field label="链接" labelFloat fullWidth v-model="article.link"/>
@@ -122,6 +125,7 @@
       getLocalArticleData () {
         let articleDetail = localStorage[constant.articleDetail];
         if (articleDetail) {
+          console.log('文章详情 = ' + articleDetail);
           articleDetail = JSON.parse(articleDetail);
           this.article = articleDetail;
           localStorage[constant.articleDetail] = '';  // 把传过来的值置空，保证不会混乱
@@ -140,10 +144,12 @@
           if (response.body.errorCode !== 0) {
             return;
           }
-          this.types = response.body.data;  // 获得最新类型数据
+          that.types = response.body.data;  // 获得最新类型数据
+          that.types.unshift(0);  // 这里在数组的第一个位置增加一个空值是因为选择器默认是有值的，设默认值为0，这时候第一个类型外面带过来的时候就不显示了，所以增加了一个空的类型放在0的位置，但是不显示它
           if (isUpdateCurrentType) {
             // 如果需要更新当前类型
             that.types.forEach(function (type, index) { // 遍历types数组
+              console.log('type.typeName = ' + type.typeName + ' index = ' + index + ' newType = ' + that.newType);
               if (type.typeName === that.newType) { // 找到数组中最新添加的那项
                 that.currentTypeIndex = index;  // 把数组中该元素的下标赋给当前选中项
                 that.newType = '';  // 把新类型置为空

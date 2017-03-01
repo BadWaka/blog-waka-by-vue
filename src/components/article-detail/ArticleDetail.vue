@@ -1,14 +1,17 @@
 <template>
   <section class="page">
     <!--顶部工具栏-->
-    <mu-appbar class="app-bar" :title="article.title">
+    <mu-appbar class="app-bar">{{article.title}}
       <!--返回按钮-->
       <mu-icon-button icon="arrow_back" slot="left" @click="back"/>
+      <!--编辑-->
+      <mu-icon-button icon="edit" slot="right" @click="edit"/>
+      <mu-icon-button icon="delete" slot="right" @click="deleteArticle"/>
       <!--右侧菜单-->
-      <mu-icon-menu icon="more_vert" slot="right">
-        <mu-menu-item title="编辑" @click="edit"/>
-        <mu-menu-item title="删除" @click="deleteArticle"/>
-      </mu-icon-menu>
+      <!--<mu-icon-menu icon="more_vert" slot="right">-->
+      <!--<mu-menu-item title="编辑" @click="edit"/>-->
+      <!--<mu-menu-item title="删除" @click="deleteArticle"/>-->
+      <!--</mu-icon-menu>-->
     </mu-appbar>
 
     <!--文章详情-->
@@ -54,12 +57,13 @@
         snackbar: false,  // snackbar开关
         snackbarMsg: '',  // snackbar提示语
         article: {},
+        // 对话框开关
         dialogToggle: false
       }
     },
     // Vue实例创建之后被调用
     created () {
-
+      console.log('created');
     },
     // activated
     activated () {
@@ -141,6 +145,7 @@
       },
       // 根据id获取文章详情
       getArticleDetailById () {
+        const that = this;
         // 请求文章详情，要带上文章id
         this.$http.get('/blogWaka/articleDetail/' + this.articleId).then(response => {
           console.log(response);

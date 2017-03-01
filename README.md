@@ -45,4 +45,5 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 - 通过设置keep-alive完成
 2. 主页的文章项和里面的类型标签点击事件冲突（已解决）
 3. 登录后主页的退出按钮没有显示，需要重新刷新才显示
-4. 
+4. 点击进入文章详情页后标题不显示的问题
+    - 原因：因为使用了title
