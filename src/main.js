@@ -22,8 +22,9 @@ router.push('/blogWaka/articleDetail');
 router.push('/blogWaka/admin/addArticle');
 router.push('/blogWaka/resume');
 router.push('/blogWaka');
-router.push('/blogWaka/login');
 
+router.push('/blogWaka/login');
+router.push('/blogWaka/admin/userList');
 
 
 // router.push('/blogWaka/resume');

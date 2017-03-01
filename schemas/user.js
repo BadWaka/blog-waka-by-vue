@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt'); // 专门为密码存储设计的算法,基于
 const SALT_WORK_FACTOR = 10;  // 盐的强度
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  username: {
     unique: true,
     type: String
   },

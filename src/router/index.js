@@ -7,9 +7,12 @@ Vue.use(Router);
 import Index from 'components/index/Index'; // 主页
 import ArticleList from '../components/article-list/ArticleList.vue'; // 文章列表页
 import ArticleDetail from 'components/article-detail/ArticleDetail';  // 文章详情页
-import Login from '../components/login/Login.vue';  // 登录页
-import AddArticle from '../components/admin/add-article/AddArticle';  // 添加文章页
 import Resume from '../components/resume/Resume.vue';  // 简历页
+import Login from '../components/login/Login.vue';  // 登录页
+// 需要admin权限
+import AddArticle from '../components/admin/add-article/AddArticle';  // 添加文章页
+import UserList from '../components/admin/user-list/UserList.vue';  // 用户列表页
+
 
 // 配置路由
 export default new Router({
@@ -46,6 +49,12 @@ export default new Router({
       path: '/blogWaka/admin/addArticle',
       name: 'AddArticle',
       component: AddArticle
+    },
+    // 用户列表页
+    {
+      path: '/blogWaka/admin/userList',
+      name: 'UserList',
+      component: UserList
     },
     // 简历页
     {

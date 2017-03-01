@@ -10,14 +10,37 @@ if (!process.env.NODE_ENV) {
 let opn = require('opn');
 let path = require('path');
 let express = require('express');
-let fs = require('fs');   // 因为要读取.md文件，所以引入文件读取模块fs
-let bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
-let mongoose = require('mongoose'); // 引入mongoose连接数据库
-let Article = require('../models/article');  // 引入Article Model
-let Type = require('../models/type');  // 引入Type Model
-let info = require('../info.json'); // 引入info.json
+
+/*********************************上方部分是vue-cli生成************************************/
+
+/**
+ * node 模块
+ */
+const fs = require('fs');   // 因为要读取.md文件，所以引入文件读取模块fs
+const bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
+
+
+/**
+ * 数据库相关
+ */
+const mongoose = require('mongoose'); // 引入mongoose连接数据库
+const info = require('../info.json'); // 引入info.json，这里面存有管理员账号密码和mongodb账号密码
+
+// 引入mongoose的model
+const Article = require('../models/article');  // 引入Article Model
+const Type = require('../models/type');  // 引入Type Model
+const User = require('../models/user'); // 引入User Model
+
+
+/**
+ * Vue2 history模式
+ */
 const history = require('connect-history-api-fallback');  // HTML5 History 模式
 const connect = require('connect'); // HTML5 History 模式
+
+
+/*********************************下方部分是vue-cli生成************************************/
+
 
 let webpack = require('webpack');
 let proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
@@ -36,10 +59,8 @@ let proxyTable = config.dev.proxyTable;
 let app = express();
 let compiler = webpack(webpackConfig);
 
-app.use(history()); // HTML5 History 模式
 
-
-/*********************************************************************/
+/*********************************上方部分是vue-cli生成************************************/
 
 // TODO 服务
 
@@ -52,6 +73,7 @@ let blogWakaRouter = express.Router();
 // 使用中间件
 app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不然是undefined
 app.use('/blogWaka', blogWakaRouter); // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
+app.use(history()); // HTML5 History 模式
 
 // 错误处理函数
 function handleError(err) {
@@ -236,8 +258,9 @@ blogWakaRouter.post('/admin/type/new', function (req, res) {
   });
 });
 
-/*-----------------------------登录相关----------------------------*/
+/*-----------------------------用户相关----------------------------*/
 
+// 登录接口
 blogWakaRouter.post('/login', function (req, res) {
   console.log(req.body);
 
@@ -272,7 +295,60 @@ blogWakaRouter.post('/login', function (req, res) {
   });
 });
 
-/*********************************************************************/
+// 注册接口
+blogWakaRouter.post('/signUp', function (req, res) {
+  console.log('注册接口 /signUp');
+  console.log(req.body);
+
+  let username = req.body.username;
+  let password = req.body.password;
+
+  let user = new User({
+    username: username,
+    password: password
+  });
+
+  user.save(function (err, user) {
+    if (err) {
+      console.log(err);
+      if (err.code === 11000) { // E11000 duplicate key error collection: blogWaka.users index: name_1 dup key: { : null }
+        err.message = '该用户已注册';
+      }
+      res.json({
+        errorCode: 1,
+        data: err.message
+      });
+      return;
+    }
+
+    console.log(user);
+    res.json({
+      errorCode: 0,
+      data: '注册成功'
+    });
+  });
+
+});
+
+// 获得所有用户接口
+blogWakaRouter.get('/admin/userList', function (req, res) {
+  User.fetch(function (err, users) {
+    let data;
+    if (err) {
+      console.log(err);
+      data = err.message;
+    } else {
+      data = users;
+    }
+    res.json({
+      errorCode: 0,
+      data: data
+    });
+  });
+});
+
+
+/*********************************下方部分是vue-cli生成************************************/
 
 
 let devMiddleware = require('webpack-dev-middleware')(compiler, {

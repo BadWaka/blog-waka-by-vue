@@ -119,7 +119,6 @@
       // 登录
       login () {
         const that = this;
-        // 请求添加新类型接口
         this.$http.post('/blogWaka/login', {
           username: this.loginOpts.username,
           password: this.loginOpts.password
@@ -145,11 +144,34 @@
       btnSignUp () {
         console.log('点击注册 btnSignUp');
         console.log(this.signUpOpts);
+        if (this.signUpOpts.password !== this.signUpOpts.passwordAgain) {
+          this.snackbarMsg = '两次输入的密码不一致，请核对';
+          this.showSnackbar();
+          return;
+        }
         this.signUp();
       },
       // 注册
       signUp () {
-
+        const that = this;
+        this.$http.post('/blogWaka/signUp', {
+          username: this.signUpOpts.username,
+          password: this.signUpOpts.password
+        }).then(response => {
+          console.log('请求成功 response = ');
+          console.log(response);
+          if (response.body.errorCode === 0) {
+            that.snackbarMsg = response.body.data;
+            that.showSnackbar();
+            that.activeTab = 'tab1';
+          } else {
+            that.snackbarMsg = response.body.data;
+            that.showSnackbar();
+          }
+        }, response => {
+          console.log('请求失败 response = ');
+          console.log(response);
+        });
       }
     }
   };
@@ -203,7 +225,7 @@
       padding-top: 16px;
       color: #767676;
       transform-origin: 70% 70%;
-      transition: 1s;
+      transition: 0.5s;
     }
 
     .icon-close:hover {
