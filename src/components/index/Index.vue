@@ -14,6 +14,9 @@
           <i class="material-icons">exit_to_app</i>
         </mu-icon-button>
         <mu-icon-button @click="settings">
+          <i class="material-icons">person</i>
+        </mu-icon-button>
+        <mu-icon-button @click="settings">
           <i class="material-icons">settings</i>
         </mu-icon-button>
       </div>

@@ -7,7 +7,7 @@
       <!--tab栏-->
       <mu-tabs :value="activeTab" @change="handleTabChange">
         <mu-tab value="tab1" title="登录"/>
-        <!--<mu-tab value="tab2" title="注册"/>-->
+        <mu-tab value="tab2" title="注册"/>
       </mu-tabs>
 
       <!--中间的框-->
@@ -15,16 +15,41 @@
 
         <!--登录框-->
         <div class="login" v-if="activeTab === 'tab1'">
-          <mu-text-field class="username" label="用户名" icon="person" labelFloat fullWidth v-model="loginOpts.username"/>
-          <mu-text-field class="password" type="password" label="密码" icon="lock" labelFloat fullWidth
-                         v-model="loginOpts.password"/>
+          <div class="row">
+            <mu-text-field label="用户名" icon="person" labelFloat fullWidth
+                           v-model="loginOpts.username"/>
+            <i class="material-icons icon-close" @click="loginOpts.username=''">close</i>
+          </div>
+
+          <div class="row">
+            <mu-text-field type="password" label="密码" icon="lock" labelFloat fullWidth
+                           v-model="loginOpts.password"/>
+            <i class="material-icons icon-close" @click="loginOpts.password=''">close</i>
+          </div>
           <mu-checkbox class="rememberPassword" label="记住密码" v-model="loginOpts.isRememberPassword"/>
           <mu-raised-button label="登录" class="btnLogin" primary @click="btnLogin"/>
         </div>
 
         <!--注册框-->
-        <div v-if="activeTab === 'tab2'">
-
+        <div class="login" v-if="activeTab === 'tab2'">
+          <div class="row">
+            <mu-text-field label="用户名" hintText="请输入用户名" icon="person" labelFloat fullWidth
+                           v-model="signUpOpts.username" autocomplete="off"/>
+            <i class="material-icons icon-close" @click="signUpOpts.username=''">close</i>
+          </div>
+          <div class="row">
+            <!--这里会有个问题，当你的type为password时，浏览器会记住密码并自动帮你填写上，然而你并不想让它帮你填，网上说加 autocomplete="off" 这个属性，但是这个属性在chrome中不怎么顶用，所以是可以这样解决，把 type="password" 这个字段去掉，加上 onfocus="this.type='password'" 也没有什么用，所以还是它爱记就让它记住吧-->
+            <mu-text-field type="password" label="密码" hintText="请输入密码" icon="lock_outline" labelFloat
+                           fullWidth
+                           v-model="signUpOpts.password" autocomplete="off"/>
+            <i class="material-icons icon-close" @click="signUpOpts.password=''">close</i>
+          </div>
+          <div class="row">
+            <mu-text-field type="password" label="确认密码" hintText="请再次输入密码" icon="lock" labelFloat fullWidth
+                           v-model="signUpOpts.passwordAgain" autocomplete="off"/>
+            <i class="material-icons icon-close" @click="signUpOpts.passwordAgain=''">close</i>
+          </div>
+          <mu-raised-button label="注册" class="btnLogin" primary @click="btnSignUp"/>
         </div>
 
       </section>
@@ -47,13 +72,19 @@
         // snackbar
         snackbar: false,  // snackbar开关
         snackbarMsg: '',  // snackbar提示语
-        // tab
+        // 当前的tab
         activeTab: 'tab1',
-        // loginOpts
+        // loginOpts 登录参数
         loginOpts: {
           username: '',
           password: '',
           isRememberPassword: false
+        },
+        // signUpOpts 注册参数
+        signUpOpts: {
+          username: '',
+          password: '',
+          passwordAgain: ''
         }
       }
     },
@@ -109,6 +140,16 @@
           console.log('请求失败 response = ');
           console.log(response);
         });
+      },
+      // 点击注册
+      btnSignUp () {
+        console.log('点击注册 btnSignUp');
+        console.log(this.signUpOpts);
+        this.signUp();
+      },
+      // 注册
+      signUp () {
+
       }
     }
   };
@@ -147,6 +188,20 @@
         }
       }
 
+    }
+  }
+
+  .row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    .icon-close {
+      padding-left: 16px;
+      padding-top: 16px;
+      color: #767676;
     }
   }
 
