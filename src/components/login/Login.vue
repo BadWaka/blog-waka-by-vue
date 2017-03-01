@@ -202,6 +202,18 @@
       padding-left: 16px;
       padding-top: 16px;
       color: #767676;
+      transform-origin: 70% 70%;
+      transition: 1s;
+    }
+
+    .icon-close:hover {
+      /*transform: rotate(180deg);*/
+      transform: scale(1.2, 1.2);
+    }
+
+    .icon-close:active {
+
+      /*transform: rotate(60deg);*/
     }
   }
 
