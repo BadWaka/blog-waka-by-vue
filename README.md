@@ -41,6 +41,8 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 5. 实现后退不刷新页面
 
 # 待解决的bug
-1. 回退到主页时记住滚动条的位置
-2. 主页的文章项和里面的类型标签点击事件冲突
-3. 
+1. 回退到主页时记住滚动条的位置（已解决）
+- 通过设置keep-alive完成
+2. 主页的文章项和里面的类型标签点击事件冲突（已解决）
+3. 登录后主页的退出按钮没有显示，需要重新刷新才显示
+4. 

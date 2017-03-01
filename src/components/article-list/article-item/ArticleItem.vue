@@ -1,6 +1,4 @@
 <template>
-  <!--使用<router-link>包裹，因为这里需要改变路由，点击后跳转到文章详情页-->
-  <!--这里还不完整，因为以后为了区分文章，还需要加入文章id,因为暂时是做样式，所以忽略-->
   <section class="wrapper" @click="articleDetail">
     <!--使用Muse-UI的纸张控件-->
     <mu-paper class="wrapper2" :zDepth="2">
@@ -12,6 +10,7 @@
       <div class="extra">
         <!--类型名-->
         <mu-raised-button :label="article.typeName" class="lower-case" @click="btnType"/>
+        <!--更新时间-->
         <span class="updateAt">{{article.updateAt}}</span>
       </div>
     </mu-paper>
@@ -53,12 +52,12 @@
         e.stopPropagation();  // 阻止事件冒泡
         e.cancelBubble = true;  // IE，阻止事件冒泡
         let typeId = this.article.typeId;
+        console.log(this.article.typeName + ' ' + this.article.typeId);
         router.push('/blogWaka/articleList/' + typeId); // 跳转到文章列表
       },
       // 时间格式化
       timeFormat () {
         let updateAt = this.article.meta.updateAt;
-        console.log(updateAt);
         updateAt = new Date(updateAt);
         updateAt = updateAt.toLocaleString();
         this.article.updateAt = updateAt;
@@ -69,18 +68,21 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
 
+  // 设置默认大小写
   .lower-case {
     text-transform: none;
   }
 
+  /*最外层wrapper*/
   .wrapper {
     width: 90%;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     color: #000;
-    cursor: pointer;
+    cursor: pointer; // 鼠标移向后指针变为点击
 
     .wrapper2 {
       padding: 24px;
+      border-radius: 4px;
 
       .title {
         font-size: 24px;
@@ -100,7 +102,10 @@
           margin-left: 24px;
         }
       }
+    }
 
+    .wrapper2:hover {
+      transform: scale(1.05, 1.05);
     }
 
   }

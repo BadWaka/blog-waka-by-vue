@@ -55,11 +55,8 @@
     },
     // activated
     activated () {
-      console.log('activated');
-      if (sessionStorage[constant.isNeedRefresh]) {
-        this.getTypeNameByTypeId();
-        this.getArticlesByTypeId();
-      }
+      this.getTypeNameByTypeId();
+      this.getArticlesByTypeId();
     },
     methods: {
       // 后退
