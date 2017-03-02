@@ -34,16 +34,19 @@ let compiler = webpack(webpackConfig);
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 引入模块 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 
-/**
- * node 模块
- */
+/*---------------------node 模块-----------------*/
+
+
 const fs = require('fs');   // 因为要读取.md文件，所以引入文件读取模块fs
 const bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
 const blogWakaRouter = express.Router();  // 定义Express的路由，并编写接口
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
-/**
- * 数据库相关
- */
+
+/*---------------------数据库相关-----------------*/
+
+
 const mongoose = require('mongoose'); // 引入mongoose连接数据库
 const info = require('../info.json'); // 引入info.json，这里面存有管理员账号密码和mongodb账号密码
 
@@ -53,9 +56,9 @@ const Type = require('../models/type');  // 引入Type Model
 const User = require('../models/user'); // 引入User Model
 
 
-/**
- * Vue2 history模式
- */
+/*---------------------Vue2 history模式-----------------*/
+
+
 const history = require('connect-history-api-fallback');  // HTML5 History 模式
 const connect = require('connect'); // HTML5 History 模式
 
@@ -66,10 +69,22 @@ const connect = require('connect'); // HTML5 History 模式
 // 连接数据库
 mongoose.connect('mongodb://localhost/blogWaka');
 
-// 使用中间件
+
+/*----------------------使用中间件----------------*/
+
+
 app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不然是undefined
 app.use('/blogWaka', blogWakaRouter); // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
 app.use(history()); // HTML5 History 模式
+
+// // 服务器保存用户状态
+// app.use(cookieParser);  // session依赖于cookieParser模块，express.cookieParser须在express.session之前调用
+// // name: 设置 cookie 中保存 session id 的字段名称，默认为connect.sid; secret: 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改; resave: 如果为true，则每次请求都重新设置session的 cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟; saveUninitialized: 如果为true, 则无论有没有session的cookie，每次请求都设置个session cookie
+// app.use(session({
+//   secret: 'waka',
+//   resave: false,
+//   saveUninitialized: true
+// }));
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 全局函数 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
@@ -96,6 +111,10 @@ function handleError(res, err) {
 
 // 请求所有文章
 blogWakaRouter.get('/articles', function (req, res) {
+
+  // console.log('user in session: ');
+  // console.log(req.session.user);
+
   Article.fetch(function (err, articles) {
     if (err) {
       handleError(err);
@@ -311,6 +330,8 @@ blogWakaRouter.post('/login', function (req, res) {
         });
         return;
       }
+
+      // req.session.user = user;  // 把用户信息保存在session里
       res.json({
         errorCode: 0,
         data: '登录成功'

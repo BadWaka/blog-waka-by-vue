@@ -126,15 +126,12 @@
           console.log('请求成功 response = ');
           console.log(response);
           if (response.body.errorCode === 0) {
-            if (that.loginOpts.isRememberPassword === true) {
-              console.log('写入accessToken');
-              localStorage[constant.accessToken] = response.body.data;
-            }
-            window.history.back();  // 后退到之前的页面
-          } else {
-            that.snackbarMsg = response.body.data;
-            that.showSnackbar();
+            setTimeout(function () {
+              router.push('/blogWaka');
+            }, 2000);
           }
+          that.snackbarMsg = response.body.data;
+          that.showSnackbar();
         }, response => {
           console.log('请求失败 response = ');
           console.log(response);
