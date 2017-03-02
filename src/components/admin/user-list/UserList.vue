@@ -95,15 +95,6 @@
     align-items: center;
   }
 
-  /*文章列表*/
-  .articles {
-    margin-top: 48px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
   /*底部分页栏*/
   .pagination-wrapper {
     display: flex;

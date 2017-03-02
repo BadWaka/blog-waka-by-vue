@@ -67,8 +67,7 @@ let compiler = webpack(webpackConfig);
 // 连接数据库
 mongoose.connect('mongodb://localhost/blogWaka');
 
-// 定义Express的路由，并编写接口
-let blogWakaRouter = express.Router();
+const blogWakaRouter = express.Router();  // 定义Express的路由，并编写接口
 
 // 使用中间件
 app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不然是undefined

@@ -19,12 +19,15 @@ Vue.use(MuseUI);
 // 添加路由，最后一个路由是默认路由
 router.push('/blogWaka/articleList');
 router.push('/blogWaka/articleDetail');
-router.push('/blogWaka/admin/addArticle');
+
 router.push('/blogWaka/resume');
-router.push('/blogWaka');
+
 
 router.push('/blogWaka/login');
 router.push('/blogWaka/admin/userList');
+router.push('/blogWaka/admin/addArticle');
+router.push('/blogWaka');
+router.push('/blogWaka/admin/index');
 
 
 // router.push('/blogWaka/resume');

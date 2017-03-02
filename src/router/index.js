@@ -10,6 +10,7 @@ import ArticleDetail from 'components/article-detail/ArticleDetail';  // 文章�
 import Resume from '../components/resume/Resume.vue';  // 简历页
 import Login from '../components/login/Login.vue';  // 登录页
 // 需要admin权限
+import AdminIndex from '../components/admin/admin-index/AdminIndex.vue';  // 后台管理页
 import AddArticle from '../components/admin/add-article/AddArticle';  // 添加文章页
 import UserList from '../components/admin/user-list/UserList.vue';  // 用户列表页
 
@@ -44,6 +45,21 @@ export default new Router({
       name: 'Login',
       component: Login
     },
+    // 简历页
+    {
+      path: '/blogWaka/resume',
+      name: 'Resume',
+      component: Resume
+    },
+
+    /*************admin************/
+
+    // 后台管理页
+    {
+      path: '/blogWaka/admin/index',
+      name: 'AdminIndex',
+      component: AdminIndex
+    },
     // 添加文章页
     {
       path: '/blogWaka/admin/addArticle',
@@ -55,12 +71,6 @@ export default new Router({
       path: '/blogWaka/admin/userList',
       name: 'UserList',
       component: UserList
-    },
-    // 简历页
-    {
-      path: '/blogWaka/resume',
-      name: 'Resume',
-      component: Resume
     }
   ],
   scrollBehavior (to, from, savedPostion) {
