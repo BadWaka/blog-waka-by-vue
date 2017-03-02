@@ -40,8 +40,7 @@ let compiler = webpack(webpackConfig);
 const fs = require('fs');   // 因为要读取.md文件，所以引入文件读取模块fs
 const bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
 const blogWakaRouter = express.Router();  // 定义Express的路由，并编写接口
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
+const session = require('express-session'); // Since version 1.5.0, the cookie-parser middleware no longer needs to be used for this module to work. https://github.com/expressjs/session
 
 
 /*---------------------数据库相关-----------------*/
@@ -77,14 +76,13 @@ app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不
 app.use('/blogWaka', blogWakaRouter); // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
 app.use(history()); // HTML5 History 模式
 
-// // 服务器保存用户状态
-// app.use(cookieParser);  // session依赖于cookieParser模块，express.cookieParser须在express.session之前调用
-// // name: 设置 cookie 中保存 session id 的字段名称，默认为connect.sid; secret: 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改; resave: 如果为true，则每次请求都重新设置session的 cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟; saveUninitialized: 如果为true, 则无论有没有session的cookie，每次请求都设置个session cookie
-// app.use(session({
-//   secret: 'waka',
-//   resave: false,
-//   saveUninitialized: true
-// }));
+// 服务器保存用户状态
+// name: 设置 cookie 中保存 session id 的字段名称，默认为connect.sid; secret: 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改; resave: 如果为true，则每次请求都重新设置session的 cookie，假设你的cookie是10分钟过期，每次请求都会再设置10分钟; saveUninitialized: 如果为true, 则无论有没有session的cookie，每次请求都设置个session cookie
+app.use(session({
+  secret: 'waka',
+  resave: false,
+  saveUninitialized: true
+}));
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 全局函数 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
