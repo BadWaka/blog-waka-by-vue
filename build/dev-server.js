@@ -75,8 +75,26 @@ app.use('/blogWaka', blogWakaRouter); // 使用该路由；所有的路由都要
 app.use(history()); // HTML5 History 模式
 
 // 错误处理函数
-function handleError(err) {
+function handleError(res, err) {
   console.log(err);
+  res.json({
+    errorCode: err.code,
+    data: err.message
+  });
+}
+
+/**
+ * 相应返回数据
+ *
+ * @param res
+ * @param errorCode
+ * @param data
+ */
+function resData(res, errorCode, data) {
+  res.json({
+    errorCode: errorCode,
+    data: data
+  });
 }
 
 /*-----------------------------文章相关----------------------------*/
@@ -268,29 +286,43 @@ blogWakaRouter.post('/login', function (req, res) {
   console.log('username = ' + username);
   console.log('password = ' + password);
 
-  if (username !== info.administratorUsername) {
-    console.log('用户名错误 username = ' + username);
-    res.json({
-      errorCode: 1,
-      data: '用户名或密码错误'
+  // 查询
+  User.findOne({
+    username: username
+  }, function (err, user) {
+
+    if (err) {
+      handleError(res, err);
+      return;
+    }
+
+    if (!user) {
+      res.json({
+        errorCode: 1,
+        data: '用户不存在'
+      });
+      return;
+    }
+
+    // 比较密码
+    user.comparePassword(password, function (err, isMatch) {
+      if (err) {
+        handleError(res, err);
+        return;
+      }
+
+      if (!isMatch) {
+        res.json({
+          errorCode: 2,
+          data: '密码不正确'
+        });
+        return;
+      }
+      res.json({
+        errorCode: 0,
+        data: '登录成功'
+      });
     });
-    return;
-  }
-
-  if (password !== info.administratorPassword) {
-    console.log('密码错误 password = ' + password);
-    res.json({
-      errorCode: 1,
-      data: '用户名或密码错误'
-    });
-    return;
-  }
-
-  let accessToken = 'demaxiyaisthebestplace';
-
-  res.json({
-    errorCode: 0,
-    data: accessToken
   });
 });
 
@@ -307,20 +339,16 @@ blogWakaRouter.post('/signUp', function (req, res) {
     password: password
   });
 
+  // 保存到数据库里
   user.save(function (err, user) {
     if (err) {
-      console.log(err);
-      if (err.code === 11000) { // E11000 duplicate key error collection: blogWaka.users index: name_1 dup key: { : null }
+      if (err.code === 11000) { // 如果错误码是11000，则代表数据库中已有该值，修改提示语
         err.message = '该用户已注册';
       }
-      res.json({
-        errorCode: 1,
-        data: err.message
-      });
+      handleError(res, err);
       return;
     }
 
-    console.log(user);
     res.json({
       errorCode: 0,
       data: '注册成功'

@@ -56,6 +56,28 @@ UserSchema.pre('save', function (next) {
 
 });
 
+/************************ 实例方法 ***********************/
+
+UserSchema.methods = {
+  /**
+   * 比较密码
+   * @param password
+   * @param cb
+   */
+  comparePassword: function (password, cb) {
+    // 调用bcrypt模块的compare方法来判断密码是否相等
+    bcrypt.compare(password, this.password, function (err, isMatch) {
+      if (err) {
+        cb(err);
+      }
+      cb(null, isMatch);
+    });
+  }
+};
+
+
+/************************ 静态方法 ***********************/
+
 UserSchema.statics = {
 
   // fetch方法，用来取出数据库里面所有的数据
