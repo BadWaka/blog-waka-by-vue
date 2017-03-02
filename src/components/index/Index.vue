@@ -13,7 +13,7 @@
         <mu-icon-button v-if="isAccessToken" @click="exitToApp">
           <i class="material-icons">exit_to_app</i>
         </mu-icon-button>
-        <mu-icon-button @click="settings">
+        <mu-icon-button @click="login">
           <i class="material-icons">person</i>
         </mu-icon-button>
         <mu-icon-button @click="settings">
@@ -131,13 +131,13 @@
       github () {
         window.open('https://github.com/BadWaka');
       },
+      // 跳转到登录页
+      login () {
+        router.push('/blogWaka/login');
+      },
       // 跳转到控制台
       settings () {
-        if (localStorage[constant.accessToken]) {
-          router.push('/blogWaka/admin/addArticle');
-        } else {
-          router.push('/blogWaka/login');
-        }
+        router.push('/blogWaka/admin/index');
       },
       // 获得accessToken
       getAccessToken () {

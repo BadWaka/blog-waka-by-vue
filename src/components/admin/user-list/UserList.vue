@@ -11,7 +11,14 @@
 
     <!--用户列表-->
     <section class="users">
-      <div v-for="user in users">{{user.username}}</div>
+      <div class="user">
+        <span>用户名</span>
+        <span>创建时间</span>
+      </div>
+      <div class="user" v-for="user in users">
+        <span>{{user.username}}</span>
+        <span>{{user.meta.createAt}}</span>
+      </div>
     </section>
 
     <!--底部分页栏-->
@@ -93,6 +100,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .users {
+    width: 100%;
+
+    .user {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 24px;
+    }
   }
 
   /*底部分页栏*/

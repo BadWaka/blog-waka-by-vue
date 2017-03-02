@@ -24,10 +24,12 @@ router.push('/blogWaka/resume');
 
 
 router.push('/blogWaka/login');
-router.push('/blogWaka/admin/userList');
+
 router.push('/blogWaka/admin/addArticle');
-router.push('/blogWaka');
+
 router.push('/blogWaka/admin/index');
+router.push('/blogWaka/admin/userList');
+router.push('/blogWaka');
 
 
 // router.push('/blogWaka/resume');
