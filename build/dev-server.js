@@ -7,18 +7,39 @@ if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
 
-let opn = require('opn');
-let path = require('path');
-let express = require('express');
+const opn = require('opn');
+const path = require('path');
+const express = require('express');
+const webpack = require('webpack');
+let proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
+let webpackConfig = process.env.NODE_ENV === 'testing'
+  ? require('./webpack.prod.conf')
+  : require('./webpack.dev.conf');
 
-/*********************************上方部分是vue-cli生成************************************/
+// default port where dev server listens for incoming traffic
+let port = process.env.PORT || config.dev.port;
+// automatically open browser, if not set will be false
+let autoOpenBrowser = config.dev.autoOpenBrowser;
+// Define HTTP proxies to your custom API backend
+// https://github.com/chimurai/http-proxy-middleware
+let proxyTable = config.dev.proxyTable;
+
+let app = express();
+let compiler = webpack(webpackConfig);
+
+
+/************************************************上方部分是vue-cli生成*********************************************/
+
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 引入模块 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
 
 /**
  * node 模块
  */
 const fs = require('fs');   // 因为要读取.md文件，所以引入文件读取模块fs
 const bodyParser = require('body-parser');  // 引入body-parser解析请求过来的数据
-
+const blogWakaRouter = express.Router();  // 定义Express的路由，并编写接口
 
 /**
  * 数据库相关
@@ -39,42 +60,26 @@ const history = require('connect-history-api-fallback');  // HTML5 History 模�
 const connect = require('connect'); // HTML5 History 模式
 
 
-/*********************************下方部分是vue-cli生成************************************/
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ node操作和引入中间件 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-
-let webpack = require('webpack');
-let proxyMiddleware = require('http-proxy-middleware'); // http 代理中间件
-let webpackConfig = process.env.NODE_ENV === 'testing'
-  ? require('./webpack.prod.conf')
-  : require('./webpack.dev.conf');
-
-// default port where dev server listens for incoming traffic
-let port = process.env.PORT || config.dev.port;
-// automatically open browser, if not set will be false
-let autoOpenBrowser = config.dev.autoOpenBrowser;
-// Define HTTP proxies to your custom API backend
-// https://github.com/chimurai/http-proxy-middleware
-let proxyTable = config.dev.proxyTable;
-
-let app = express();
-let compiler = webpack(webpackConfig);
-
-
-/*********************************上方部分是vue-cli生成************************************/
-
-// TODO 服务
 
 // 连接数据库
 mongoose.connect('mongodb://localhost/blogWaka');
-
-const blogWakaRouter = express.Router();  // 定义Express的路由，并编写接口
 
 // 使用中间件
 app.use(bodyParser.json()); // 使用bodyParser将req.body解析成json，要不然是undefined
 app.use('/blogWaka', blogWakaRouter); // 使用该路由；所有的路由都要加上/blogWaka，举个栗子：localhost:8080/blogWaka/articles
 app.use(history()); // HTML5 History 模式
 
-// 错误处理函数
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 全局函数 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+
+/**
+ * 错误处理函数
+ * @param res
+ * @param err
+ */
 function handleError(res, err) {
   console.log(err);
   res.json({
@@ -83,19 +88,9 @@ function handleError(res, err) {
   });
 }
 
-/**
- * 相应返回数据
- *
- * @param res
- * @param errorCode
- * @param data
- */
-function resData(res, errorCode, data) {
-  res.json({
-    errorCode: errorCode,
-    data: data
-  });
-}
+
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 路由配置 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
 
 /*-----------------------------文章相关----------------------------*/
 
@@ -283,8 +278,6 @@ blogWakaRouter.post('/login', function (req, res) {
 
   let username = req.body.username;
   let password = req.body.password;
-  console.log('username = ' + username);
-  console.log('password = ' + password);
 
   // 查询
   User.findOne({
@@ -375,7 +368,7 @@ blogWakaRouter.get('/admin/userList', function (req, res) {
 });
 
 
-/*********************************下方部分是vue-cli生成************************************/
+/*********************************************下方部分是vue-cli生成*************************************************/
 
 
 let devMiddleware = require('webpack-dev-middleware')(compiler, {
