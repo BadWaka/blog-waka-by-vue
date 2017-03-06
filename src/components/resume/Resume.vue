@@ -56,7 +56,7 @@
           </div>
           <!--项目-->
           <div v-for="(project,index) in workExperience.projects" class="projects">
-            <div class="project-name">-&nbsp;{{project.name}}</div>
+            <div class="project-name">-&nbsp;<a target="_blank" :href="project.link">{{project.name}}</a></div>
             <div class="project-intro" v-html="project.intro"></div>
           </div>
         </div>
@@ -116,20 +116,45 @@
           },
           // 工作经验
           workExperiences: [{
-            company: '正益移动互联科技股份有限公司',
+            company: '正益移动互联科技股份有限公司（AppCan）',
             job: '前端开发工程师',
             city: '北京',
             beginTime: '2015.10',
             endTime: '至今',
             projects: [{
               name: '正益工作',
-              intro: '该项目为Zepto.js+Backbone.js+AppCan.js的Hybrid应用，我在完善功能样式后使用Vue.js重构部分项目，优化代码结构，并引入Sass和Gulp.js，代码量减少20%，极大提升维护效率。该项目源代码已被应用在福田汽车、卡斯柯信号、奥凯航空等企业OA应用中。'
+              link: 'http://work.zyhao.com/',
+              intro: '使用Zepto.js+Backbone.js+AppCan.js构建的Hybrid应用，主要负责前端页面功能、样式的开发和Android原生端的对接。我在完善功能样式后使用Vue.js重构部分项目，优化代码结构，并引入Sass和Gulp.js，代码量减少20%，极大提升维护效率。'
             }, {
               name: '正益移动-微信小程序',
-              intro: '该项目采用敏捷开发，由我和一名后端开发一周内共同完成。我在此项目中作为小程序的管理员，负责小程序全部的页面设计、前端开发和上线发布。'
+              link: 'http://work.zyhao.com/',
+              intro: '公司内部打卡订餐管理的小程序。该项目采用敏捷开发，由我和一名后端开发一周内共同完成。我在此项目中作为小程序的管理员，负责小程序全部的页面设计、前端开发和上线发布。'
+            }, {
+              name: '福田汽车-移动门户',
+              link: 'https://mobin.foton.com.cn/app/',
+              intro: '使用Zepto.js+Backbone.js+Epoxy.js+AppCan.js的Hybrid应用，接手外包公司走后遗留代码，主要负责H5页面的功能、样式的实现及维护，正在使用Vue.js重构。'
+            }, {
+              name: '乌鲁木齐银行-雪莲伙伴',
+              link: 'http://www.uccb.com.cn/phone.aspx',
+              intro: '基于AppCan的Hybrid应用，作为技术支持人员出差至乌鲁木齐对外包人员进行前端速度优化及Android原生开发的技术支持，根据厂商提供的设备及SDK开发POS机原生插件并实现JS调用。'
+            }, {
+              name: '中国电力建设集团-电建通',
+              link: '',
+              intro: '基于AppCan的Hybrid应用，作为Android原生开发人员，负责华为eSpaceSDK的二次开发、封装和性能优化，大量使用Broadcast广播接收器和Handler多线程编程，为JS端提供Voip语音通话功能。'
             }, {
               name: '其他项目支持',
               intro: '在<b>福田汽车</b>和<b>中国核电POC</b>项目中负责前端开发部分； <b>中电建电建通</b>项目中负责Android端原生模块，华为eSpaceSDK的二次开发；在<b>乌鲁木齐银行雪莲伙伴</b>项目，<b>北京东方雨虹</b>项目中负责前端速度优化和Android原生模块技术支持；开发和维护AppCan Android原生插件'
+            }]
+          }, {
+            company: '北京观天智创科技有限公司',
+            job: 'Android开发实习生',
+            city: '北京',
+            beginTime: '2015.03',
+            endTime: '2015.09',
+            projects: [{
+              name: '旺铺帮掌柜宝',
+              link: 'http://www.wangpupos.com/serve/twodownload.html',
+              intro: '使用AndroidSDK，负责Android应用程序的财务管理模块的开发及维护。'
             }]
           }],
           // 个人项目
@@ -372,6 +397,8 @@
     .works {
       font-size: 12px;
       .work-item {
+        font-size: 14px;
+        margin-bottom: 12px;
         .work-title {
           display: flex;
           justify-content: space-between;
