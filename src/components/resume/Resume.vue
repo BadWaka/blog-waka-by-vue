@@ -37,8 +37,14 @@
       <!--</section>-->
 
       <h2 class="h-white">职业技能</h2>
-      <section id="vocationalSkill">
+      <section class="vocationalSkill">
         <div v-for="vocationalSkill in resume.vocationalSkillsText" class="item">-&nbsp;{{vocationalSkill}}
+        </div>
+      </section>
+
+      <h2 class="h-white">自我评价</h2>
+      <section class="vocationalSkill">
+        <div v-for="selfAssessment in resume.selfAssessments" class="item">-&nbsp;{{selfAssessment}}
         </div>
       </section>
 
@@ -62,14 +68,14 @@
         </div>
       </section>
 
-      <h2 class="h-blue">自我评价</h2>
-      <section class="self-assessment">
-        <div v-for="(assessment,index) in resume.selfAssessments" class="projects">
-          <div class="project-name">
-            {{assessment}}
-          </div>
-        </div>
-      </section>
+      <!--<h2 class="h-blue">自我评价</h2>-->
+      <!--<section class="self-assessment">-->
+      <!--<div v-for="(assessment,index) in resume.selfAssessments" class="projects">-->
+      <!--<div class="project-name">-->
+      <!--{{assessment}}-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</section>-->
 
       <h2 class="h-blue">个人项目</h2>
       <section class="personal-projects">
@@ -105,7 +111,8 @@
           baseInfo: {
             age: '24',
             phone: '15652912603',
-            email: 'waka931124@gmail.com',
+            email: 'waka931124@163.com',
+//            email: 'waka931124@gmail.com',
             school: '华北电力大学(北京)',
             education: '本科',
             major: '软件工程',
@@ -127,23 +134,22 @@
               intro: '使用Zepto.js+Backbone.js+AppCan.js构建的Hybrid应用，主要负责前端页面功能、样式的开发和Android原生端的对接。我在完善功能样式后使用Vue.js重构部分项目，优化代码结构，并引入Sass和Gulp.js，代码量减少20%，极大提升维护效率。'
             }, {
               name: '正益移动-微信小程序',
-              link: 'http://work.zyhao.com/',
               intro: '公司内部打卡订餐管理的小程序。该项目采用敏捷开发，由我和一名后端开发一周内共同完成。我在此项目中作为小程序的管理员，负责小程序全部的页面设计、前端开发和上线发布。'
             }, {
               name: '福田汽车-移动门户',
               link: 'https://mobin.foton.com.cn/app/',
-              intro: '使用Zepto.js+Backbone.js+Epoxy.js+AppCan.js的Hybrid应用，接手外包公司走后遗留代码，主要负责H5页面的功能、样式的实现及维护，正在使用Vue.js重构。'
+              intro: '福田汽车协同办公移动门户，使用Zepto.js+Backbone.js+Epoxy.js+AppCan.js的Hybrid应用，主要负责员工之家H5页面的功能、样式的实现与维护。'
             }, {
               name: '乌鲁木齐银行-雪莲伙伴',
               link: 'http://www.uccb.com.cn/phone.aspx',
-              intro: '基于AppCan的Hybrid应用，作为技术支持人员出差至乌鲁木齐对外包人员进行前端速度优化及Android原生开发的技术支持，根据厂商提供的设备及SDK开发POS机原生插件并实现JS调用。'
+              intro: '乌鲁木齐银行的POS机Hybrid App，包括各种卡类充值功能，作为前端/Android技术支持人员出差至乌鲁木齐对开发人员进行前端速度优化的培训及Android原生开发的技术支持，根据厂商提供的设备及SDK开发POS机原生插件并实现JS调用。'
             }, {
               name: '中国电力建设集团-电建通',
-              link: '',
-              intro: '基于AppCan的Hybrid应用，作为Android原生开发人员，负责华为eSpaceSDK的二次开发、封装和性能优化，大量使用Broadcast广播接收器和Handler多线程编程，为JS端提供Voip语音通话功能。'
+              link: 'http://pcm.powerchina.cn/',
+              intro: '中国电力建设集团内部OA管理Hybrid App，作为Android原生开发人员，负责华为eSpaceSDK的二次开发、封装和性能优化，大量使用Broadcast广播接收器和Handler多线程编程，为JS端提供Voip语音通话功能。'
             }, {
               name: '其他项目支持',
-              intro: '在<b>福田汽车</b>和<b>中国核电POC</b>项目中负责前端开发部分； <b>中电建电建通</b>项目中负责Android端原生模块，华为eSpaceSDK的二次开发；在<b>乌鲁木齐银行雪莲伙伴</b>项目，<b>北京东方雨虹</b>项目中负责前端速度优化和Android原生模块技术支持；开发和维护AppCan Android原生插件'
+              intro: '中国核电POC 项目中负责前端开发部分；<br/>杭州指端科技 项目中负责开发Android计步器及图片标签插件；<br/>北京东方雨虹 项目中负责前端速度优化和Android原生模块技术支持；<br/>上海凯泉 项目中负责百度地图SDK的二次开发；<br/>开发和维护AppCan Android原生插件，在AppCan前端技术论坛上做技术支持'
             }]
           }, {
             company: '北京观天智创科技有限公司',
@@ -152,9 +158,13 @@
             beginTime: '2015.03',
             endTime: '2015.09',
             projects: [{
-              name: '旺铺帮掌柜宝',
+              name: '旺铺帮掌柜宝/旺铺帮平板点餐',
               link: 'http://www.wangpupos.com/serve/twodownload.html',
-              intro: '使用AndroidSDK，负责Android应用程序的财务管理模块的开发及维护。'
+              intro: '餐饮管理App，负责Android端的财务管理、平板点餐模块的开发及维护，使用AndroidSDK完成页面布局、功能及平板兼容。'
+            }, {
+              name: '我们去哪儿',
+              link: 'http://sj.qq.com/myapp/detail.htm?apkName=com.travel.travel_app',
+              intro: '旅行社交类App，负责Android端首页去哪模块及个人信息模块的功能实现。使用AndroidSDK完成开发，使用JUnit进行单元测试'
             }]
           }],
           // 个人项目
@@ -165,7 +175,7 @@
           }, {
             name: 'waka-wechat-public',
             link: 'https://github.com/BadWaka/waka-wechat-public',
-            intro: 'Koa搭建的微信公众号后台服务（开发中）'
+            intro: 'Koa搭建的微信公众号后台服务'
           }, {
             name: 'gallery-by-react-waka',
             link: 'https://github.com/BadWaka/gallery-by-react-waka',
@@ -177,34 +187,44 @@
           }, {
             name: 'WakaPedometer',
             link: 'https://github.com/BadWaka/WakaPedometer',
-            intro: 'Android 原生计步器程序'
+            intro: 'Android原生计步器程序，使用开源库Volley、fastjson'
           }, {
             name: 'SmallDianPing',
             link: 'https://github.com/BadWaka/SmallDianPing',
-            intro: 'Android 原生仿美团订餐程序'
+            intro: 'Android原生仿美团订餐程序，使用高德地图SDK'
           }],
           // 自我评价
           selfAssessments: [
-            '- 计算机基础扎实，掌握JavaScript，CSS，熟练使用各种布局，使用过ES6',
-            '- 对解决多浏览器兼容问题，前端性能优化有一定的经验，工作中需要兼容各种型号的手机',
-            '- 理解前端工程化思想，对构建和持续集成有一定认识，熟悉webpack，了解gulp',
-            '- 理解组件化开发思想，有一定的设计和抽象能力，熟悉Vue.js',
-            '- 对后端技术和数据库有一定了解，熟悉Node.js，熟悉MongoDB，熟悉Android内置SQLite',
-            '- 有移动端开发经验，主要负责公司Hybrid产品的开发和技术支持，有过原生Android开发经验',
-            '- 对公司主要产品正益工作有过重构经验',
-            '- 学习能力强，能快速上手新技术，同时也能快速熟悉业务',
-            '- 关注开源技术，技术视野开阔',
-            '- 懂得Android原生技术，在移动端适配及原生能力开发调试有优势',
-            '- 能积极融入团队，有集体责任感，热爱健身，能够承受高压力的工作'
+            '有自己的技术博客，乐于分享，热爱新技术、新知识',
+            '计算机基础扎实，掌握JavaScript，CSS，熟练使用各种布局，使用过ES6',
+            '对解决多浏览器兼容问题，前端性能优化有一定的经验，工作中需要兼容各种型号的手机',
+            '理解前端工程化思想，对构建和持续集成有一定认识，熟悉webpack，了解gulp',
+            '理解组件化开发思想，有一定的设计和抽象能力，熟练使用Vue.js',
+            '对后端技术和数据库有一定了解，熟悉Node.js，熟悉MongoDB，熟悉Android内置SQLite',
+            '有移动端开发经验，主要负责公司Hybrid产品的开发和技术支持，有过原生Android开发经验',
+            '对公司主要产品正益工作有过重构经验',
+            '学习能力强，能快速上手新技术，同时也能快速熟悉业务',
+            '关注开源技术，技术视野开阔',
+            '懂得Android原生技术，在移动端适配及原生能力开发调试有优势',
+            '能积极融入团队，有集体责任感，热爱健身，能够承受高压力的工作'
           ],
+//          // 职业技能
+//          vocationalSkillsText: [
+//            '掌握: HTML, CSS, JS',
+//            '熟悉: jQuery, Vue.js, 微信小程序MINA, AppCan.js(类Ionic的Hybrid框架)',
+//            '熟练: ES6, Sass, Bootstrap, Backbone.js, React, webpack, Node.js, npm, Express, MongoDB',
+//            '了解: stylus, PostCSS, Angular2, React Native, Gulp.js, Koa/Koa2, Yarn',
+//            '有Android原生开发经历，熟练使用Java、Android SDK及Android调试工具',
+//            '日常开发使用macOS，Webstorm，Android Studio，Git，熟悉linux命令'
+//          ],
           // 职业技能
           vocationalSkillsText: [
-            '掌握HTML、CSS、JS，熟悉ES6',
-            'CSS预处理器方面熟悉Sass，了解stylus，使用过PostCSS',
-            '类库方面掌握jQuery、Vue.js、微信小程序MINA、AppCan.js(类Ionic的Hybrid框架)，熟悉Bootstrap、Backbone.js、React，了解Angular2、React Native',
-            '构建工具方面熟悉webpack，了解Gulp.js；熟悉前端工程化和组件化开发',
-            '有后端开发经历，主要使用Node.js、MongoDB，类库方面熟悉Express，了解koa/koa2；工具方面熟练使用npm，使用过Yarn',
-            '有Android原生开发经历，熟悉Java、Android SDK及Android调试工具使用',
+            '掌握HTML、CSS、JS，熟练使用ES6',
+            'CSS预处理器方面熟练使用Sass，了解stylus，使用过PostCSS',
+            '类库方面熟悉jQuery、Vue.js、微信小程序MINA、AppCan.js(类Ionic的Hybrid框架)，熟练使用Bootstrap、Backbone.js、React，了解Angular2、React Native',
+            '构建工具方面熟练使用webpack，了解Gulp.js；熟悉前端工程化和组件化开发思想',
+            '有后端开发经历，熟练使用Node.js、MongoDB，类库方面熟练使用Express，了解koa/koa2；工具方面熟练使用npm，使用过Yarn',
+            '有Android原生开发经历，熟练使用Java、Android SDK及Android调试工具',
             '日常开发使用macOS，Webstorm，Android Studio，Git，熟悉linux命令',
             '英语4级，阅读英文文档基本无障碍'
           ],
@@ -287,7 +307,7 @@
 
   .h-white {
     width: 100%;
-    font-size: 12px;
+    font-size: 16px;
     padding-bottom: 8px;
     margin-bottom: 8px;
     margin-top: 36px;
@@ -297,7 +317,7 @@
   .h-blue {
     color: $color-primary;
     width: 100%;
-    font-size: 12px;
+    font-size: 16px;
     padding-bottom: 4px;
     margin-bottom: 4px;
     margin-top: 12px;
@@ -338,11 +358,11 @@
 
       .job {
         margin-top: 12px;
-        font-size: 21px;
+        font-size: 24px;
       }
 
       .name {
-        font-size: 16px;
+        font-size: 18px;
       }
     }
 
@@ -354,7 +374,7 @@
       font-size: 12px;
     }
 
-    #vocationalSkill {
+    .vocationalSkill {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -362,6 +382,7 @@
       font-size: 12px;
 
       .skill-item {
+        font-size: 12px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
@@ -385,21 +406,28 @@
 
       .item {
         margin-top: 4px;
+        font-size: 12px;
       }
     }
   }
 
   .right {
     width: 70%;
+    font-size: 14px;
     padding-left: 18px;
     padding-right: 9px;
 
     .works {
-      font-size: 12px;
+      font-size: 14px;
       .work-item {
-        font-size: 14px;
+        padding-bottom: 6px;
         margin-bottom: 12px;
+        /*border-bottom: 1px solid #03A9F4;*/
+        /*font-size: 14px;*/
+        /*font-weight: bold;*/
         .work-title {
+          font-size: 16px;
+          font-weight: bold;
           display: flex;
           justify-content: space-between;
         }
@@ -407,7 +435,7 @@
     }
 
     .self-assessment {
-      font-size: 12px;
+      font-size: 14px;
       .project-name {
         display: flex;
         align-items: center;
@@ -431,7 +459,7 @@
     }
 
     .projects {
-      font-size: 12px;
+      font-size: 15px;
       margin-top: 3px;
       .project-name {
         display: flex;
